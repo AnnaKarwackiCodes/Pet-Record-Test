@@ -3,13 +3,20 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import LoginComponent from "./Components/loginComponent";
+import Dashboard from "./Pages/dashboard";
 
 export default function Index() {
-  const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((store: any)=> {
   return store.userInfo.isLoggedIn;
   });
+
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn || false);
+
+  useEffect(() => {
+    setLoggedIn(isLoggedIn);
+    console.log("index isLoggedIN: " + isLoggedIn);
+  }, [isLoggedIn]);
   return (
       <View
       style={{
@@ -18,7 +25,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      {isLoggedIn?<View></View> : <LoginComponent/>}
+      {loggedIn?<Dashboard /> : <LoginComponent/>}
     </View>
   );
 }

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        width: 150,
+        width: 250,
         textAlign: 'center'
       },
       longTextInput:{
@@ -26,7 +26,23 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10, 
         borderRadius: 4,
-        margin: 5
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      logoutButton: {
+        backgroundColor: "#b57336",
+        width: 200,
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 5 
       },
       titleText: {
         textAlign: 'center',
