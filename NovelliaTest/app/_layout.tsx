@@ -5,10 +5,10 @@ import { Provider} from 'react-redux'
 export default function RootLayout() {
   return (
   <Provider store={store}>
-    <Tabs>
-      <Tabs.Screen name="index" options={{title: 'Home'}} />
-      <Tabs.Screen name="testpage" options={{title: 'Test'}} />
-    </Tabs>
+    <Stack screenOptions={{headerShown: false}}>
+      <Stack.Screen name="index" options={{title: 'Home'}} />
+      <Stack.Screen name="dashboard" options={{title: 'DashBoard'}} />
+    </Stack>
   </Provider>
   )
 }
