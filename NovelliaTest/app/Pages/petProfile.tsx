@@ -8,24 +8,13 @@ import styles from "../Helpers/styleSheet";
 import { setLoginState } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
 
-export default function Dashboard() {
+export default function PetProfile({petInfo}: any) {
 const dispatch = useDispatch();
 
-const userName = useSelector((store: any)=> {
-return store.userInfo.name;
-});
-const [myName, setMyName] = useState(userName||'');
-
-    useEffect(() => {
-        setMyName(userName);
-        console.log("userName: " + userName);
-    }, [userName]);
-
 const tester = [
-  {name: "Wulfred", type: "dog", breed: "corgi", DOB: "07/02/2022"},
-  {name: "Art Jr", type: "cat", breed: "orange", DOB: "?"},
-  {name: "Raven", type: "bird", breed: "raven", DOB: "?"},
-  {name: "BunBun", type: "bunny", breed: "floppy", DOB: "?"},
+  {type: "vaccine", name: "", date: ""},
+  {type: "allergies", name: "", reaction: "", severity: ""},
+  {type: "labs", name: "", dosage: "", instructions: ""},
 ]
 
   return (
@@ -43,11 +32,12 @@ const tester = [
             source={require('../Assets/temp.jpg')}
             style={{width: 100, height: 100, alignSelf: 'center'}}
         />
-      <Text style={styles.titleText}>Welcome {myName}</Text>
-      <Text style={styles.subTitleText}>This is you pet dashboard.</Text>
+      <Text style={styles.titleText}>{petInfo.name}'s Profile</Text>
+      <Text style={styles.subTitleText}>Type: {petInfo.type} Breed: {petInfo.breed}</Text>
+      <Text style={styles.subTitleText}>DOB: {petInfo.DOB}</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {console.log('pet press')}}/>}/>
-        <ListItem itemObj={{addType: "pet"}} itemType={"add"} onPress={() => {console.log('add press')}}/>
+        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {console.log('Record press')}}/>}/>
+        <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {console.log('add press')}}/>
       </View>
     </View>
   );

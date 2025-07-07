@@ -18,7 +18,20 @@ const styles = StyleSheet.create({
         textAlign: 'center'
       },
       confirmButton: {
-        backgroundColor: "#578FCA"
+        backgroundColor: "#578FCA",
+        width: 170,
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
       },
       loginButton: {
         backgroundColor: "#3674B5",
@@ -42,17 +55,25 @@ const styles = StyleSheet.create({
         height: 50,
         padding: 10, 
         borderRadius: 4,
-        margin: 5 
+        margin: 5,
+        position: 'absolute',
+        top: 0,
+        left: 10 
       },
       titleText: {
         textAlign: 'center',
-        fontSize: 35
+        fontSize: 35,
+        marginTop: 15
       },
       subTitleText: {
-
+        textAlign: 'center',
+        fontSize: 29,
+        marginTop: 10
       },
       bodyText: {
-        
+        textAlign: 'center',
+        fontSize: 23,
+        marginTop: 10
       },
       formView: {
 
