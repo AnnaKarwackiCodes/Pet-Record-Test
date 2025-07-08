@@ -11,13 +11,13 @@ export default function ListItem({itemObj, itemType, onPress}: any){
     useEffect(()=> {
         if(itemType === "pet"){
             switch(itemObj.type){
-                case "cat" :
+                case "Cat" :
                     setIcon(require('../Assets/cat.png'));
                     break;
-                case "bird" :
+                case "Bird" :
                     setIcon(require('../Assets/bird.png'));
                     break;
-                case "bunny" :
+                case "Bunny" :
                     setIcon(require('../Assets/bunny.png'));
                     break;
                 default:
@@ -26,11 +26,11 @@ export default function ListItem({itemObj, itemType, onPress}: any){
             }
         }
         else if(itemType === "record"){
-            switch(itemObj.type){
-                case "vaccine" :
+            switch((itemObj.type)){
+                case "Vaccine" :
                     setIcon(require('../Assets/vaccines.png'));
                     break;
-                case "allergies" :
+                case "Allergies" :
                     setIcon(require('../Assets/allergies.png'));
                     break;
                 default:
@@ -58,6 +58,15 @@ export default function ListItem({itemObj, itemType, onPress}: any){
                     <View style={{position:'fixed', right: 5, top:18}}>
                         <AppButton style={styles.confirmButton} text={"View Records"} onPress={onPress} />
                     </View>
+                </>: <></> }
+                {(itemType === "record") ? <> 
+                <View style={{margin:'auto', flexDirection: 'column'}}>
+                    <Text style={styles.bodyText}> Record Type: {itemObj.type}</Text>
+                    <Text style={styles.bodyText}> Last Updated: {itemObj.updatedDate}</Text>
+                </View> 
+                <View style={{position:'fixed', right: 5, top:23}}>
+                    <AppButton style={styles.confirmButton} text={"View Record"} onPress={onPress} />
+                </View>
                 </>: <></> }
                 {(itemType === "add") ? <View style={{margin:'auto'}}> 
                     <Text style={styles.bodyText}> Add New </Text>

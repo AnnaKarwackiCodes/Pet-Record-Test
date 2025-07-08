@@ -34,10 +34,10 @@ useEffect(() => {
 
 useEffect(() => {
   dispatch(setPetList({petList: [
-  {name: "Wulfred", type: "dog", breed: "corgi", DOB: "07/02/2022"},
-  {name: "Art Jr", type: "cat", breed: "orange", DOB: "?"},
-  {name: "Raven", type: "bird", breed: "raven", DOB: "?"},
-  {name: "BunBun", type: "bunny", breed: "floppy", DOB: "?"},
+  {name: "Wulfred", type: "Dog", breed: "corgi", DOB: "07/02/2022"},
+  {name: "Art Jr", type: "Cat", breed: "orange", DOB: "?"},
+  {name: "Raven", type: "Bird", breed: "raven", DOB: "?"},
+  {name: "BunBun", type: "Bunny", breed: "floppy", DOB: "?"},
 ]}))
 }, []);
 

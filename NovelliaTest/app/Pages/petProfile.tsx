@@ -7,6 +7,8 @@ import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
 import { setCurrentScreen, setLoginState } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
+import AddNewListItem from "../Components/addNewListItem";
+import { setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 
 export default function PetProfile() {
 const dispatch = useDispatch();
@@ -25,9 +27,9 @@ useEffect(() => {
 }, []);
 
 const tester = [
-  {type: "vaccine", name: "", date: ""},
-  {type: "allergies", name: "", reaction: "", severity: ""},
-  {type: "labs", name: "", dosage: "", instructions: ""},
+  {type: "Vaccine", name: "", dateAdmin: "", updatedDate: ""},
+  {type: "Allergies", name: "", reaction: "", severity: "", updatedDate: ""},
+  {type: "Labs", name: "", dosage: "", instructions: "", updatedDate: ""},
 ]
 
   return (
@@ -46,9 +48,10 @@ const tester = [
       <Text style={styles.subTitleText}>Type: {currentPet.type} Breed: {currentPet.breed}</Text>
       <Text style={styles.subTitleText}>DOB: {currentPet.DOB}</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {console.log('Record press')}}/>}/>
-        <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {console.log('add press')}}/>
+        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {console.log('Record press')}}/>}/>
+        <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true})); console.log('add press')}}/>
       </View>
+      <AddNewListItem itemType={"record"}/>
     </View>
   );
 }

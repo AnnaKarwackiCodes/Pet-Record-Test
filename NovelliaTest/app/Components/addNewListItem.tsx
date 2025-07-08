@@ -3,10 +3,11 @@ import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setIsAddPetOpen, setSelected } from "@/Redux/reducers/SystemSettings";
+import { setIsAddPetOpen, setIsAddRecordOpen, setSelected } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import CheckBox from "./checkbox";
 import BreedSelect from "./breedSelect";
+import RecordSelect from "./recordSelect";
 
 export default function AddNewListItem({itemType, onClose}: any){
     const dispatch = useDispatch();
@@ -17,20 +18,53 @@ export default function AddNewListItem({itemType, onClose}: any){
     const [DOB, setDOB] = useState('');
     const [date, setDate] = useState(new Date(1598051730000))
 
-    const isModalOpen = useSelector((store: any)=> {
+    const [recordType, setRecordType] = useState('')
+
+    const [vaccineName, setVaccineName] = useState('');
+    const [vaccineDate, setVaccineDate] = useState('');
+
+    const [allergyName, setAllergyName] = useState('');
+    const [allergyReaction, setAllergyReaction] = useState('');
+    const [allergySeverity, setAllergySeverity] = useState('');
+
+    const [labName, setLabName] = useState('');
+    const [labDosage, setLabDosage] = useState('');
+    const [labInstruction, setLabInstruction] = useState('');
+
+    const isAddPetOpen = useSelector((store: any)=> {
         return store.systemSettings.isAddPetOpen;
     });
 
-    const [modalVisible, setModalVisible] = useState(isModalOpen);
-        useEffect(() => {
-        setModalVisible(isModalOpen);
-        console.log("isModalOpen: " + isModalOpen);
-    }, [isModalOpen]);
+    const isAddRecordOpen = useSelector((store: any)=> {
+        return store.systemSettings.isAddRecordOpen;
+    });
+
+    const curRecordType = useSelector((store: any)=> {
+        return store.systemSettings.currentRecordType;
+    });
+
+    const [currentRecordType, setCurRecordType] = useState(curRecordType)
+    useEffect(()=>{
+        setCurRecordType(currentRecordType);
+        console.log('curRecordType: ' + curRecordType)
+    }, [curRecordType])
+
+    const [modalVisible, setModalVisible] = useState(itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
+    useEffect(() => {
+        setModalVisible(itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
+        console.log("isModalOpen: " + itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
+    }, [itemType=== "pet"? isAddPetOpen : isAddRecordOpen]);
 
     const onChange = (event:DateTimePickerEvent, selectedDate:Date) => {
         const currentDate = selectedDate;
         setDate(currentDate);
-        setDOB(currentDate.getMonth().toString() + "-" + currentDate.getDate().toString() + "-" + currentDate.getFullYear().toString());
+        let myDate = currentDate.getMonth().toString() + "-" + currentDate.getDate().toString() + "-" + currentDate.getFullYear().toString();
+        if(itemType === "pet"){
+            setDOB(myDate);
+        }
+        else if(itemType === "record" && recordType === "Vaccine"){
+            setVaccineDate(myDate);
+        }
         console.log(DOB)
     };
     return(
@@ -54,7 +88,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                     shadowOpacity: 0.25,
                     shadowRadius: 4,
                     elevation: 5,}}>
-            <View style={styles.spacingPadding}>
+            {itemType === "pet" && <View style={styles.spacingPadding}>
                 <Text style={styles.titleText}>Add a New Pet</Text>
                 <View style={styles.spacingPadding}>
                     <TextInput
@@ -92,7 +126,85 @@ export default function AddNewListItem({itemType, onClose}: any){
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: false}))}}/>
                     </View>
                 </View>
-            </View>
+            </View>}
+             {itemType === "record" && <View style={styles.spacingPadding}>
+                <Text style={styles.titleText}>Add a New Record</Text>
+                <Text style={styles.bodyText}>Select Record Type</Text>
+                <RecordSelect />
+                <View style={styles.spacingPadding}>
+                    {currentRecordType === "vaccine" ? <View>
+                        <TextInput
+                            style={styles.shortTextInput}
+                            onChangeText={setName}
+                            value={name}
+                            placeholder="Vaccine Name"
+                            placeholderTextColor={"#807e7c"}
+                        />
+                        <View style={{margin: 'auto'}}>
+                            <Text style={styles.bodyText}>Date Administered</Text>
+                            <View style={{ alignContent: 'center', margin: 20, left: 0, width: '100%', paddingRight:20}}>
+                                <DateTimePicker
+                                    style={{width: '100%', margin:'auto', }}
+                                    testID="dateTimePicker"
+                                    value={date}
+                                    mode={'date'}
+                                    onChange={onChange}
+                                    themeVariant={"light"}
+                                />
+                            </View>
+                        </View>
+                    </View> : null}
+                    {currentRecordType === "allergy" ? <View>
+                        <TextInput
+                            style={styles.shortTextInput}
+                            onChangeText={setName}
+                            value={name}
+                            placeholder="Allergy Name"
+                            placeholderTextColor={"#807e7c"}
+                        />
+                        <View style={{margin: 'auto'}}>
+                            <Text style={styles.bodyText}>Pet's Reaction</Text>
+                            <TextInput
+                            style={styles.shortTextInput}
+                            onChangeText={setName}
+                            value={name}
+                            placeholder="Severity of Allergy"
+                            placeholderTextColor={"#807e7c"}
+                        />
+                        </View>
+                    </View> : null}
+                    {currentRecordType==="lab" ? <View>
+                        <View style={{margin: 'auto'}}>
+                            <TextInput
+                            style={styles.shortTextInput}
+                            onChangeText={setName}
+                            value={name}
+                            placeholder="Lab Name"
+                            placeholderTextColor={"#807e7c"}
+                        />
+                            <TextInput
+                                style={styles.shortTextInput}
+                                onChangeText={setName}
+                                value={name}
+                                placeholder="Dosage"
+                                placeholderTextColor={"#807e7c"}
+                            />
+                            <TextInput
+                                style={styles.longTextInput}
+                                onChangeText={setName}
+                                value={name}
+                                placeholder="Instructions"
+                                placeholderTextColor={"#807e7c"}
+                            />
+                        </View>
+                    </View> : null}
+
+                    <View style={{margin:'auto'}}>
+                        <AppButton style={styles.loginButton} text={"Save"} onPress={()=>{dispatch(itemType === "pet" ? setIsAddPetOpen({isAddPetOpen: false}) : setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
+                        <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(itemType === "pet" ? setIsAddPetOpen({isAddPetOpen: false}) : setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
+                    </View>
+                </View>
+            </View>}
             </View>
         </Modal>
     )

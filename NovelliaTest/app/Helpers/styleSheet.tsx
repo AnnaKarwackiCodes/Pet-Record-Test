@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        width: 150,
+        width: 250,
         textAlign: 'center'
       },
       confirmButton: {
