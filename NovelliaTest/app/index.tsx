@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import LoginComponent from "./Components/loginComponent";
 import Dashboard from "./Pages/dashboard";
+import LoggedInPage from "./Pages/loggedInPage";
 
 export default function Index() {
 
@@ -25,7 +26,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      {loggedIn?<Dashboard /> : <LoginComponent/>}
+      {loggedIn?<LoggedInPage /> : <LoginComponent/>}
     </View>
   );
 }

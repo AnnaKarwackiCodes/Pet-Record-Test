@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
       },
       confirmButton: {
         backgroundColor: "#578FCA",
-        width: 170,
+        width: 'auto',
         height: 50,
         padding: 10, 
         borderRadius: 4,
@@ -32,6 +32,24 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+      },
+      returnButton: {
+        backgroundColor: "#578FCA",
+        width: 'auto',
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        top: 0,
+        left: 0,
       },
       loginButton: {
         backgroundColor: "#3674B5",
@@ -51,14 +69,22 @@ const styles = StyleSheet.create({
       },
       logoutButton: {
         backgroundColor: "#b57336",
-        width: 200,
+        width: 100,
         height: 50,
         padding: 10, 
         borderRadius: 4,
         margin: 5,
         position: 'absolute',
         top: 0,
-        left: 10 
+        right: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5, 
       },
       titleText: {
         textAlign: 'center',

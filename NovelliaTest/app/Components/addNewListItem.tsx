@@ -3,36 +3,36 @@ import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setIsAddPetOpen } from "@/Redux/reducers/SystemSettings";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { setIsAddPetOpen, setSelected } from "@/Redux/reducers/SystemSettings";
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import CheckBox from "./checkbox";
+import BreedSelect from "./breedSelect";
 
 export default function AddNewListItem({itemType, onClose}: any){
     const dispatch = useDispatch();
-    const [icon, setIcon] = useState(require('../Assets/error.png'));
 
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [breed, setBreed] = useState('');
     const [DOB, setDOB] = useState('');
     const [date, setDate] = useState(new Date(1598051730000))
-    const [openDate, setOpenDate] = useState(false)
 
     const isModalOpen = useSelector((store: any)=> {
         return store.systemSettings.isAddPetOpen;
     });
+
     const [modalVisible, setModalVisible] = useState(isModalOpen);
         useEffect(() => {
         setModalVisible(isModalOpen);
         console.log("isModalOpen: " + isModalOpen);
     }, [isModalOpen]);
 
-    const onChange = (event:any, selectedDate:Date) => {
-    const currentDate = selectedDate;
-    //setShow(false);
-    setDate(currentDate);
-    setDOB(currentDate.getMonth().toString() + "-" + currentDate.getDate().toString() + "-" + currentDate.getFullYear().toString());
-    console.log(DOB)
-  };
+    const onChange = (event:DateTimePickerEvent, selectedDate:Date) => {
+        const currentDate = selectedDate;
+        setDate(currentDate);
+        setDOB(currentDate.getMonth().toString() + "-" + currentDate.getDate().toString() + "-" + currentDate.getFullYear().toString());
+        console.log(DOB)
+    };
     return(
         <Modal 
           animationType="slide"
@@ -64,7 +64,9 @@ export default function AddNewListItem({itemType, onClose}: any){
                         placeholder="Your Pet's Name"
                         placeholderTextColor={"#807e7c"}
                     />
-                    
+                    <View>
+                        <BreedSelect />
+                    </View>
                     <TextInput
                         style={styles.shortTextInput}
                         onChangeText={setBreed}

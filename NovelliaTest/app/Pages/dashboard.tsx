@@ -1,11 +1,9 @@
-import { Text, View, Image, ScrollView, FlatList } from "react-native";
-import {StyleSheet, TextInput} from 'react-native';
-import { useEffect, useRef, useState } from "react";
+import { Text, View, Image, FlatList } from "react-native";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { setKeyValue } from "../../Redux/reducers/Tester";
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
-import { setLoginState } from "@/Redux/reducers/UserInfo";
+import { setCurrentPetID, setCurrentScreen, setLoginState, setPetList } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
 import AddNewListItem from "../Components/addNewListItem";
 import { setIsAddPetOpen } from "@/Redux/reducers/SystemSettings";
@@ -17,20 +15,32 @@ const userName = useSelector((store: any)=> {
 return store.userInfo.name;
 });
 
+const petList = useSelector((store: any)=> {
+return store.userInfo.petList;
+});
+
 const [myName, setMyName] = useState(userName||'');
+const [myPetList, setMyPetList] = useState(petList||[]);
 
 useEffect(() => {
     setMyName(userName);
     console.log("userName: " + userName);
 }, [userName]);
 
+useEffect(() => {
+    setMyPetList(petList);
+    console.log("petList: " + petList);
+}, [petList]);
 
-const tester = [
+useEffect(() => {
+  dispatch(setPetList({petList: [
   {name: "Wulfred", type: "dog", breed: "corgi", DOB: "07/02/2022"},
   {name: "Art Jr", type: "cat", breed: "orange", DOB: "?"},
   {name: "Raven", type: "bird", breed: "raven", DOB: "?"},
   {name: "BunBun", type: "bunny", breed: "floppy", DOB: "?"},
-]
+]}))
+}, []);
+
 
   return (
     <View
@@ -50,7 +60,7 @@ const tester = [
       <Text style={styles.titleText}>Welcome {myName}</Text>
       <Text style={styles.subTitleText}>This is you pet dashboard.</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {console.log('pet press')}}/>}/>
+        <FlatList data={petList} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {dispatch(setCurrentPetID({currentPetIndex: index})); dispatch(setCurrentScreen({currentScreen: 'petProfile'})); console.log('pet press');}}/>}/>
         <ListItem itemObj={{addType: "pet"}} itemType={"add"} onPress={() => {dispatch(setIsAddPetOpen({isAddPetOpen: true}));  console.log('add press')}}/>
       </View>
       <AddNewListItem itemType={"pet"}/>

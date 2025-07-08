@@ -9,6 +9,8 @@ const UserInfo = createSlice({
         petList: [],
         createAnAccount: false,
         isLoggingIn: false,
+        currentPetIndex: -1,
+        currentScreen: 'dashboard'
     },
     reducers:{
         setUserInfo: (state, action)=> {
@@ -16,7 +18,6 @@ const UserInfo = createSlice({
             state.email = action.payload.email;
             state.isLoggedIn = action.payload.isLoggedIn;
             state.petList = action.payload.petList;
-            state.createAnAccount = action.payload.createAnAccount;
         },
         setPetList: (state, action)=> {
            state.petList = action.payload.petList; 
@@ -29,10 +30,17 @@ const UserInfo = createSlice({
         },
         setIsLoggingIn: (state, action)=> {
             state.isLoggingIn = action.payload.isLoggingIn;
-        }
+        },
+        setCurrentPetID: (state, action)=> {
+            state.currentPetIndex = action.payload.currentPetIndex;
+        },
+        setCurrentScreen: (state, action) => {
+            state.currentScreen = action.payload.currentScreen;
+            console.log('fjsdnfkjdsfnk');
+        },
     }
 })
 
-export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn} = UserInfo.actions;
+export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn, setCurrentPetID, setCurrentScreen} = UserInfo.actions;
 
 export default UserInfo.reducer;
