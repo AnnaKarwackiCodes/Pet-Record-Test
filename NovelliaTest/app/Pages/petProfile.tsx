@@ -60,19 +60,29 @@ function deletePetRecord(){
         justifyContent: "center",
         alignItems: "center",
         width: '100%',
-        marginTop: 15
+        marginTop: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+        width: 0,
+        height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
       }}
     >
-      <AppButton style={styles.confirmButton} text={"Return to Dashboard"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'dashboard'}));}}/>
-
-      <Text style={styles.titleText}>{currentPet.name}'s Profile</Text>
+     
+      <View style={{height: '60%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
+        <View>
+           <Text style={styles.titleText}>{currentPet.name}'s Profile</Text>
       <Text style={styles.subTitleText}>Type: {currentPet.type} Breed: {currentPet.breed}</Text>
       <Text style={styles.subTitleText}>DOB: {currentPet.DOB}</Text>
       <AppButton style={styles.confirmButton} text={"Edit Profile"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: true}));}}/>
-      <View style={{height: '50%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
+        </View>
         <FlatList data={myPetList[currentPetIndex].records} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {dispatch(setCurrentRecordID({currentRecordIndex: index})); dispatch(setCurrentScreen({currentScreen: 'recordDetails'}));}}/>}/>
         <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true}));}}/>
       </View>
+       <AppButton style={styles.confirmButton} text={"Return to Dashboard"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'dashboard'}));}}/>
       <AppButton style={styles.deleteButton} text={"Delete Pet Record"} onPress={()=>{setModalDeleteVisible(true)}}/>
       <AddNewListItem itemType={"record"}/>
       <Modal 

@@ -3,7 +3,7 @@ import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setCurrentPetType, setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
+import { setCurrentPetType, setCurrentRecordType, setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import AnimalTypeSelect from "./animalTypeSelect";
 import RecordSelect from "./recordSelect";
@@ -35,6 +35,10 @@ export default function AddNewListItem({itemType, onClose}: any){
 
     const currentPetIndex = useSelector((store: any)=> {
         return store.userInfo.currentPetIndex;
+    });
+
+    const currentRecordIndex = useSelector((store: any)=> {
+        return store.userInfo.currentRecordIndex;
     });
     const result : PetInfo[] = [];
     const recordListFormat : any[] = [[]];
@@ -75,6 +79,8 @@ export default function AddNewListItem({itemType, onClose}: any){
     }, [(itemType=== "pet" || itemType === "petEdit")? isAddPetOpen : isAddRecordOpen]);
 
     useEffect(() => {
+        dispatch(setCurrentPetType({currentPetType: ''}));
+        dispatch(setCurrentRecordType({curRecordType: ''}));
         setName('');
         setType('');
         setBreed('');
@@ -87,7 +93,6 @@ export default function AddNewListItem({itemType, onClose}: any){
         setLabName('');
         setLabInstruction('');
         setLabDosage('');
-        dispatch(setCurrentPetType({currentPetType: ''}));
 
         if(itemType ==="petEdit"){
             console.log(myPetList[currentPetIndex]);
@@ -97,6 +102,27 @@ export default function AddNewListItem({itemType, onClose}: any){
             setDOB(myPetList[currentPetIndex].DOB);
             setDate(new Date());
             dispatch(setCurrentPetType({currentPetType: myPetList[currentPetIndex].type}))
+        }
+        else if(itemType === "recordEdit"){
+            let record = myPetList[currentPetIndex].records[currentRecordIndex];
+            console.log(record);
+            let cur = record.type;
+            dispatch(setCurrentRecordType({currentRecordType:cur}));
+            setDate(new Date());
+            if(cur === 'Vaccine'){
+                setVaccineName(record.name);
+                setVaccineDate(record.adminDate);
+            }
+            else if(cur === 'Allergy'){
+                setAllergyName(record.name);
+                setAllergyReaction(record.reaction);
+                setAllergySeverity(record.severity);
+            }
+            else if(cur === 'Lab'){
+                setLabName(record.name);
+                setLabInstruction(record.instructions);
+                setLabDosage(record.dosage);
+            }
         }
     }, [modalVisible]);
 
@@ -110,11 +136,11 @@ export default function AddNewListItem({itemType, onClose}: any){
         
         //let myDate = currentDate.getMonth().toString() + "/" + currentDate.getDate().toString() + "/" + currentDate.getFullYear().toString();
         let myDate = currentDate.toLocaleDateString();
-        console.log(Date.parse(myDate));
+        console.log(myDate);
         if(itemType === "pet" || itemType === "petEdit"){
             setDOB(myDate);
         }
-        else if(itemType === "record"){
+        else if(itemType === "record" || itemType === "recordEdit"){
             setVaccineDate(myDate);
         }
     };
@@ -162,6 +188,82 @@ export default function AddNewListItem({itemType, onClose}: any){
             
             dispatch(setPetList({petList: newList}));
             dispatch(setIsAddPetOpen({isAddPetOpen: false}))
+        }
+        else{
+            setShowError(true);
+        }
+    }
+
+    function saveRecordEdit(){
+        let newList: any[] = []; 
+        let newRecordList: any[] = []; 
+
+        var today = new Date();
+        var dd = String(today.getDate());
+        var mm = String(today.getMonth() + 1);
+        var yyyy = today.getFullYear();
+        var date = mm + '/' + dd + '/' + yyyy;
+
+        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
+                        if(id === currentRecordIndex){
+                            newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date});
+                        }
+                        else{
+                            newList.push(ele);
+                        }
+                    });
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
+
+            dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
+        }
+        else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((ele: any, id:number) => {
+                        if(id === currentRecordIndex){
+                            newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date});
+                        }
+                        else{
+                            newList.push(ele);
+                        }
+                    }); 
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
+            dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
+        }
+        else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
+                        if(id === currentRecordIndex){
+                            newList.push({type: "Lab", name: vaccineName, dosage: labDosage, instructions: labInstruction, updatedDate: date});
+                        }
+                        else{
+                            newList.push(ele);
+                        }
+                    });
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
+            dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
         else{
             setShowError(true);
@@ -294,12 +396,12 @@ export default function AddNewListItem({itemType, onClose}: any){
                     </View>
                 </View>
             </View>}
-             {itemType === "record" && <View style={styles.spacingPadding}>
-                <Text style={styles.titleText}>Add a New Record</Text>
+             {(itemType === "record" || itemType === "recordEdit") && <View style={styles.spacingPadding}>
+                <Text style={styles.titleText}>{itemType === "pet" ? "Add a New Record" : "Edit Pet's Record" }</Text>
                 <Text style={styles.bodyText}>Select Record Type</Text>
                 <RecordSelect />
                 <View style={styles.spacingPadding}>
-                    {currentRecordType === "vaccine" ? <View>
+                    {currentRecordType === "Vaccine" ? <View>
                         <TextInput
                             style={styles.shortTextInput}
                             onChangeText={setVaccineName}
@@ -321,7 +423,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                             </View>
                         </View>
                     </View> : null}
-                    {currentRecordType === "allergy" ? <View>
+                    {currentRecordType === "Allergy" ? <View>
                         <TextInput
                             style={styles.shortTextInput}
                             onChangeText={setAllergyName}
@@ -340,7 +442,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                         />
                         </View>
                     </View> : null}
-                    {currentRecordType==="lab" ? <View>
+                    {currentRecordType ==="Lab" ? <View>
                         <View style={{margin: 'auto'}}>
                             <TextInput
                             style={styles.shortTextInput}
@@ -367,7 +469,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                     </View> : null}
                     {showError && <Text style={styles.errorText}>Information missing for adding your pet's record, please add all information.</Text>}
                     <View style={{margin:'auto'}}>
-                        <AppButton style={styles.loginButton} text={"Save"} onPress={() => {saveRecord();}}/>
+                        <AppButton style={styles.loginButton} text={"Save"} onPress={() => {if(itemType === "record"){saveRecord();}else{saveRecordEdit();}}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
                     </View>
                 </View>

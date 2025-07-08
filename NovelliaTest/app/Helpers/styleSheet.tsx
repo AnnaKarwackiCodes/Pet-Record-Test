@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         padding: 10, 
         borderRadius: 4,
         margin: 5,
+        marginTop: 15,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
 import { setCurrentScreen, setPetList } from "@/Redux/reducers/UserInfo";
+import AddNewListItem from "../Components/addNewListItem";
+import { setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 
 export default function RecordDetails() {
 const dispatch = useDispatch();
@@ -22,16 +24,18 @@ const currentRecordIndex = useSelector((store: any)=> {
 return store.userInfo.currentRecordIndex;
 });
 
-const [currentRecord, setCurrentRecord] = useState(petList[currentPetIndex].records[currentRecordIndex]||null);
 const [myPetList, setMyPetList] = useState(petList||null);
+const [currentRecord, setCurrentRecord] = useState(myPetList[currentPetIndex].records[currentRecordIndex]||null);
 
 useEffect(() => {
-  setCurrentPet(petList[currentPetIndex]);
-  setCurrentRecord(petList[currentPetIndex].records[currentRecordIndex]);
+  setCurrentPet(myPetList[currentPetIndex]);
+  setCurrentRecord(myPetList[currentPetIndex].records[currentRecordIndex]);
 }, []);
 
 useEffect(() => {
   setMyPetList(petList);
+  setCurrentPet(petList[currentPetIndex]);
+  setCurrentRecord(petList[currentPetIndex].records[currentRecordIndex]);
 }, [petList])
 
 function deleteRecord(){
@@ -63,10 +67,20 @@ function deleteRecord(){
         justifyContent: "center",
         alignItems: "center",
         width: '100%',
-        marginTop: 15
+        marginTop: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+        width: 0,
+        height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
       }}
     >
+      <View style={{height: 'auto', width: '70%', marginTop: 10, marginBottom: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
       <Text style={styles.titleText}>{currentPet.name}'s {currentRecord.type} Record</Text>
+      <AppButton style={styles.returnButton} text={"Edit Record"} onPress={()=>{dispatch(setIsAddRecordOpen({setIsAddRecordOpen: true}));}}/>
             {currentRecord.type === "Vaccine" ? <View style={{marginBottom: 25}}>
                 <Text style={styles.subTitleText}>Vaccine Name: {currentRecord.name}</Text>
                 <Text style={styles.subTitleText}>Date Administered: {currentRecord.dateAdmin}</Text>
@@ -84,8 +98,9 @@ function deleteRecord(){
                 <Text style={styles.subTitleText}>Instructions: {currentRecord.instructions}</Text>
                 <Text style={styles.bodyText}>Record Last Update: {currentRecord.updatedDate}</Text>
             </View> : null}
-          <AppButton style={styles.returnButton} text={"Return to Profile"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'petProfile'}));}}/>
-          <AppButton style={styles.deleteButton} text={"Delete Record"} onPress={()=>{setModalVisible(true)}}/>
+        </View>
+        <AppButton style={styles.returnButton} text={"Return to Profile"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'petProfile'}));}}/>
+        <AppButton style={styles.deleteButton} text={"Delete Record"} onPress={()=>{setModalVisible(true)}}/>
      <Modal 
           animationType="slide"
           transparent={true}
@@ -112,6 +127,7 @@ function deleteRecord(){
             <AppButton style={styles.returnButton} text={"Cancel"} onPress={()=>{setModalVisible(false)}}/>
            </View>
         </Modal>
+        <AddNewListItem itemType={'recordEdit'}/>
     </View>
   );
 }

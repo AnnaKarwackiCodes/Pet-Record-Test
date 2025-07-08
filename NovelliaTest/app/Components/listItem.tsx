@@ -45,7 +45,7 @@ export default function ListItem({itemObj, itemType, onPress}: any){
 
     return(
         <TouchableHighlight style={{marginBottom:10}} onPress={onPress}>
-            <View style={{width: '100%', height: 100, backgroundColor: '#fff', flexDirection: 'row'}}>
+            <View style={{width: '100%', height: 100, backgroundColor: '#fff', flexDirection: 'row', borderColor:"#000", borderWidth: 1, borderRadius:15}}>
                 <Image
                     source={icon}
                     style={{alignSelf: 'center', marginLeft: 15, marginRight: 15}}

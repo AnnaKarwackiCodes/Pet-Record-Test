@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import styles from "../Helpers/styleSheet";
 import { setCurrentRecordType } from "@/Redux/reducers/SystemSettings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function RecordSelect(){
     const dispatch = useDispatch();
@@ -12,20 +12,33 @@ export default function RecordSelect(){
     const [isVaccineSelected, setIsVaccineSelected] = useState(false);
     const [isAllergySelected, setIsAllergySelected] = useState(false);
     const [isLabSelected, setIsLabSelected] = useState(false);
+    const curRecordType = useSelector((store: any)=> {
+        return store.systemSettings.currentRecordType;
+    });
+    const [type, setType] = useState(curRecordType || '');
 
     useEffect(()=>{
         let cur = '';
         if(isVaccineSelected){
-            cur = 'vaccine';
+            cur = 'Vaccine';
         }
         else if(isAllergySelected){
-            cur = 'allergy';
+            cur = 'Allergy';
         }
         else if(isLabSelected){
-            cur = 'lab';
+            cur = 'Lab';
         }
-        dispatch(setCurrentRecordType({currentRecordType: cur}))
+        if(cur !== type){
+            dispatch(setCurrentRecordType({currentRecordType: cur}))
+        }     
     },[isVaccineSelected, isAllergySelected, isLabSelected]);
+
+    useEffect(()=>{
+        setType(curRecordType);
+        setIsVaccineSelected(curRecordType === "Vaccine"); 
+        setIsAllergySelected(curRecordType === "Allergy"); 
+        setIsLabSelected(curRecordType === "Lab"); 
+    }, [curRecordType]);
 
     return(
         <View>
