@@ -147,8 +147,8 @@ export default function AddNewListItem({itemType, onClose}: any){
         if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
-                    myPetList[currentPetIndex].records.forEach((element: any) => {
-                        newList.push(element);
+                    myPetList[currentPetIndex].records.forEach((ele: any) => {
+                        newList.push(ele);
                     });
                     newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
@@ -164,8 +164,8 @@ export default function AddNewListItem({itemType, onClose}: any){
         else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
-                    myPetList[currentPetIndex].records.forEach((element: any) => {
-                        newList.push(element);
+                    myPetList[currentPetIndex].records.forEach((ele: any) => {
+                        newList.push(ele);
                     });
                     newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
@@ -180,8 +180,8 @@ export default function AddNewListItem({itemType, onClose}: any){
         else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
-                    myPetList[currentPetIndex].records.forEach((element: any) => {
-                        newList.push(element);
+                    myPetList[currentPetIndex].records.forEach((ele: any) => {
+                        newList.push(ele);
                     });
                     newList.push({type: "Lab", name: vaccineName, dosage: labDosage, instructions: labInstruction, updatedDate: date});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})

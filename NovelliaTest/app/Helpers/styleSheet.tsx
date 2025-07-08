@@ -33,6 +33,22 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
       },
+      deleteButton: {
+        backgroundColor: "#d40824",
+        width: 'auto',
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 25,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
       returnButton: {
         backgroundColor: "#578FCA",
         width: 'auto',
