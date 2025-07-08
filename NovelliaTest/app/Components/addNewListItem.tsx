@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { setIsAddPetOpen, setIsAddRecordOpen, setSelected } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import CheckBox from "./checkbox";
-import BreedSelect from "./breedSelect";
+import AnimalTypeSelect from "./animalTypeSelect";
 import RecordSelect from "./recordSelect";
 
 export default function AddNewListItem({itemType, onClose}: any){
@@ -43,10 +43,9 @@ export default function AddNewListItem({itemType, onClose}: any){
         return store.systemSettings.currentRecordType;
     });
 
-    const [currentRecordType, setCurRecordType] = useState(curRecordType)
+    const [currentRecordType, setCurRecordType] = useState(curRecordType || '')
     useEffect(()=>{
-        setCurRecordType(currentRecordType);
-        console.log('curRecordType: ' + curRecordType)
+        setCurRecordType(curRecordType);
     }, [curRecordType])
 
     const [modalVisible, setModalVisible] = useState(itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
@@ -65,7 +64,6 @@ export default function AddNewListItem({itemType, onClose}: any){
         else if(itemType === "record" && recordType === "Vaccine"){
             setVaccineDate(myDate);
         }
-        console.log(DOB)
     };
     return(
         <Modal 
@@ -99,7 +97,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                         placeholderTextColor={"#807e7c"}
                     />
                     <View>
-                        <BreedSelect />
+                        <AnimalTypeSelect />
                     </View>
                     <TextInput
                         style={styles.shortTextInput}

@@ -36,7 +36,6 @@ const UserInfo = createSlice({
         },
         setCurrentScreen: (state, action) => {
             state.currentScreen = action.payload.currentScreen;
-            console.log('fjsdnfkjdsfnk');
         },
     }
 })

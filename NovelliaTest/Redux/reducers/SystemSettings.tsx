@@ -17,14 +17,11 @@ const SystemSettings = createSlice({
         },
         setCurrentRecordType: (state, action) => {
             state.currentRecordType = action.payload.currentRecordType;
-            console.log(action.payload.currentRecordType);
-        },
-        setTest: (state, action) => {
-            console.log('lksjdfjklbfsjklbsfd');
+            console.log("setCurrentRecordType " + action.payload.currentRecordType);
         },
     }
 })
 
-export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType, setTest} = SystemSettings.actions;
+export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType} = SystemSettings.actions;
 
 export default SystemSettings.reducer;

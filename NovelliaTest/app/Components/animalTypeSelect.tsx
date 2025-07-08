@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import styles from "../Helpers/styleSheet";
 
-export default function BreedSelect(){
+export default function AnimalTypeSelect(){
     const notSelected = require('../Assets/box.png');
     const selected = require('../Assets/checked.png');
 

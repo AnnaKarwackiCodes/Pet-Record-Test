@@ -9,23 +9,25 @@ export default function RecordSelect(){
     const notSelected = require('../Assets/box.png');
     const selected = require('../Assets/checked.png');
 
-    const [isVaccineSelected, setIsVaccineSelected] = useState(true);
+    const [isVaccineSelected, setIsVaccineSelected] = useState(false);
     const [isAllergySelected, setIsAllergySelected] = useState(false);
     const [isLabSelected, setIsLabSelected] = useState(false);
 
-    const [curSelected, setCurSelected] = useState('vaccine');
+    const [curSelected, setCurSelected] = useState('');
 
     useEffect(()=>{
+        let cur = '';
         if(isVaccineSelected){
-            setCurSelected('vaccine');
+            cur = 'vaccine';
         }
         else if(isAllergySelected){
-            setCurSelected('allergy');
+            cur = 'allergy';
         }
         else if(isLabSelected){
-            setCurSelected('lab');
+            cur = 'lab';
         }
-        dispatch(setCurrentRecordType({currentRecordType: curSelected}))
+        setCurSelected(cur);
+        dispatch(setCurrentRecordType({currentRecordType: cur}))
     },[isVaccineSelected, isAllergySelected, isLabSelected]);
 
     return(

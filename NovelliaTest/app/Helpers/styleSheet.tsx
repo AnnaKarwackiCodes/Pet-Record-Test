@@ -88,17 +88,17 @@ const styles = StyleSheet.create({
       },
       titleText: {
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 32,
         marginTop: 15
       },
       subTitleText: {
         textAlign: 'center',
-        fontSize: 29,
+        fontSize: 26,
         marginTop: 10
       },
       bodyText: {
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 20,
         marginTop: 10
       },
       formView: {

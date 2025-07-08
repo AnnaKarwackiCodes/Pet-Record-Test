@@ -60,8 +60,8 @@ useEffect(() => {
       <Text style={styles.titleText}>Welcome {myName}</Text>
       <Text style={styles.subTitleText}>This is you pet dashboard.</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={petList} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {dispatch(setCurrentPetID({currentPetIndex: index})); dispatch(setCurrentScreen({currentScreen: 'petProfile'})); console.log('pet press');}}/>}/>
-        <ListItem itemObj={{addType: "pet"}} itemType={"add"} onPress={() => {dispatch(setIsAddPetOpen({isAddPetOpen: true}));  console.log('add press')}}/>
+        <FlatList data={petList} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"pet"} onPress={() => {dispatch(setCurrentPetID({currentPetIndex: index})); dispatch(setCurrentScreen({currentScreen: 'petProfile'}));}}/>}/>
+        <ListItem itemObj={{addType: "pet"}} itemType={"add"} onPress={() => {dispatch(setIsAddPetOpen({isAddPetOpen: true}));}}/>
       </View>
       <AddNewListItem itemType={"pet"}/>
     </View>

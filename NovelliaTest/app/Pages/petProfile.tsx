@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setKeyValue } from "../../Redux/reducers/Tester";
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
-import { setCurrentScreen, setLoginState } from "@/Redux/reducers/UserInfo";
+import { setCurrentScreen } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
 import AddNewListItem from "../Components/addNewListItem";
 import { setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
@@ -48,8 +48,8 @@ const tester = [
       <Text style={styles.subTitleText}>Type: {currentPet.type} Breed: {currentPet.breed}</Text>
       <Text style={styles.subTitleText}>DOB: {currentPet.DOB}</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {console.log('Record press')}}/>}/>
-        <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true})); console.log('add press')}}/>
+        <FlatList data={tester} renderItem={({item})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {}}/>}/>
+        <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true}));}}/>
       </View>
       <AddNewListItem itemType={"record"}/>
     </View>
