@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         width: 250,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 20,
       },
       longTextInput:{
         height: 150,
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         width: 250,
-        textAlign: 'center'
+        fontSize: 20,
       },
       confirmButton: {
         backgroundColor: "#578FCA",

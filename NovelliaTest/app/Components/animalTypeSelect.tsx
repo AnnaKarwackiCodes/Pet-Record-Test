@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import styles from "../Helpers/styleSheet";
 import { setCurrentPetType } from "@/Redux/reducers/SystemSettings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AnimalTypeSelect(){
     const dispatch = useDispatch();
     const notSelected = require('../Assets/box.png');
     const selected = require('../Assets/checked.png');
+
+    const curPetType = useSelector((store: any)=> {
+        return store.systemSettings.currentPetType;
+    });
+    const [type, setType] = useState(curPetType || '');
 
     const [isDogSelected, setIsDogSelected] = useState(false);
     const [isCatSelected, setIsCatSelected] = useState(false);
@@ -28,8 +33,18 @@ export default function AnimalTypeSelect(){
             else if(isBunnySelected){
                 cur = 'Bunny';
             }
-            dispatch(setCurrentPetType({currentPetType: cur}))
+           if(cur !== type){
+             dispatch(setCurrentPetType({currentPetType: cur}));
+           }
         },[isDogSelected, isCatSelected, isBirdSelected, isBunnySelected]);
+    
+    useEffect(()=>{
+        setType(curPetType);
+        setIsDogSelected(curPetType === "Dog"); 
+        setIsCatSelected(curPetType === "Cat"); 
+        setIsBirdSelected(curPetType === "Bird"); 
+        setIsBunnySelected(curPetType === "Bunny")
+    }, [curPetType]);
 
     return(
         <View>
