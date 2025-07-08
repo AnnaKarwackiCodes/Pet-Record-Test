@@ -6,6 +6,7 @@ const SystemSettings = createSlice({
         isAddPetOpen: false,
         isAddRecordOpen: false,
         currentRecordType: '',
+        currentPetType: '',
     },
     reducers:{
         
@@ -17,11 +18,13 @@ const SystemSettings = createSlice({
         },
         setCurrentRecordType: (state, action) => {
             state.currentRecordType = action.payload.currentRecordType;
-            console.log("setCurrentRecordType " + action.payload.currentRecordType);
+        },
+        setCurrentPetType: (state, action) => {
+            state.currentPetType = action.payload.currentPetType;
         },
     }
 })
 
-export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType} = SystemSettings.actions;
+export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType, setCurrentPetType} = SystemSettings.actions;
 
 export default SystemSettings.reducer;

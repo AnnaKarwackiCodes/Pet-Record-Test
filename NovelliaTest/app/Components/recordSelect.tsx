@@ -13,8 +13,6 @@ export default function RecordSelect(){
     const [isAllergySelected, setIsAllergySelected] = useState(false);
     const [isLabSelected, setIsLabSelected] = useState(false);
 
-    const [curSelected, setCurSelected] = useState('');
-
     useEffect(()=>{
         let cur = '';
         if(isVaccineSelected){
@@ -26,7 +24,6 @@ export default function RecordSelect(){
         else if(isLabSelected){
             cur = 'lab';
         }
-        setCurSelected(cur);
         dispatch(setCurrentRecordType({currentRecordType: cur}))
     },[isVaccineSelected, isAllergySelected, isLabSelected]);
 

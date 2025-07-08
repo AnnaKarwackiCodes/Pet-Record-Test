@@ -3,17 +3,46 @@ import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setIsAddPetOpen, setIsAddRecordOpen, setSelected } from "@/Redux/reducers/SystemSettings";
+import { setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import CheckBox from "./checkbox";
 import AnimalTypeSelect from "./animalTypeSelect";
 import RecordSelect from "./recordSelect";
+import { setPetList, setPetRecords } from "@/Redux/reducers/UserInfo";
+import { DogInfo } from "../Helpers/typing";
 
 export default function AddNewListItem({itemType, onClose}: any){
     const dispatch = useDispatch();
 
+    const curPetType = useSelector((store: any)=> {
+        return store.systemSettings.currentPetType;
+    });
+     const curRecordType = useSelector((store: any)=> {
+        return store.systemSettings.currentRecordType;
+    });
+    const isAddPetOpen = useSelector((store: any)=> {
+        return store.systemSettings.isAddPetOpen;
+    });
+    const isAddRecordOpen = useSelector((store: any)=> {
+        return store.systemSettings.isAddRecordOpen;
+    });
+    const petList = useSelector((store: any)=> {
+        return store.userInfo.petList;
+    });
+
+    const recordList = useSelector((store: any)=> {
+        return store.userInfo.petRecords;
+    });
+
+    const currentPetIndex = useSelector((store: any)=> {
+        return store.userInfo.currentPetIndex;
+    });
+    const result : DogInfo[] = [];
+    const recordListFormat : any[] = [[]];
+    const [myPetList, setMyPetList] = useState(petList || result);
+    const [myRecordList, setMyRecordList] = useState(recordList || recordListFormat)
+
     const [name, setName] = useState('');
-    const [type, setType] = useState('');
+    const [type, setType] = useState(curPetType || '');
     const [breed, setBreed] = useState('');
     const [DOB, setDOB] = useState('');
     const [date, setDate] = useState(new Date(1598051730000))
@@ -31,28 +60,31 @@ export default function AddNewListItem({itemType, onClose}: any){
     const [labDosage, setLabDosage] = useState('');
     const [labInstruction, setLabInstruction] = useState('');
 
-    const isAddPetOpen = useSelector((store: any)=> {
-        return store.systemSettings.isAddPetOpen;
-    });
-
-    const isAddRecordOpen = useSelector((store: any)=> {
-        return store.systemSettings.isAddRecordOpen;
-    });
-
-    const curRecordType = useSelector((store: any)=> {
-        return store.systemSettings.currentRecordType;
-    });
+    useEffect(()=>{
+        setType(curPetType);
+    }, [curPetType]);
 
     const [currentRecordType, setCurRecordType] = useState(curRecordType || '')
     useEffect(()=>{
         setCurRecordType(curRecordType);
-    }, [curRecordType])
+    }, [curRecordType]);
 
     const [modalVisible, setModalVisible] = useState(itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
     useEffect(() => {
         setModalVisible(itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
         console.log("isModalOpen: " + itemType=== "pet"? isAddPetOpen : isAddRecordOpen);
     }, [itemType=== "pet"? isAddPetOpen : isAddRecordOpen]);
+
+    useEffect(() => {
+        setName('');
+        setType('');
+        setBreed('');
+        setDOB('');
+    }, [modalVisible]);
+
+    useEffect(() => {
+        setMyRecordList(recordList);
+    }, [recordList]);
 
     const onChange = (event:DateTimePickerEvent, selectedDate:Date) => {
         const currentDate = selectedDate;
@@ -61,10 +93,62 @@ export default function AddNewListItem({itemType, onClose}: any){
         if(itemType === "pet"){
             setDOB(myDate);
         }
-        else if(itemType === "record" && recordType === "Vaccine"){
+        else if(itemType === "record"){
             setVaccineDate(myDate);
         }
     };
+
+    useEffect(() => {
+        setMyPetList(petList);
+    },[petList]);
+
+    useEffect(() => {
+        if(showError){
+            setShowError(false);
+        }
+    },[name, type, breed, DOB]);
+
+    const [showError, setShowError] = useState(false);
+    function saveNewPet(){
+        if(name !== '' && type !== '' && breed !== '' && DOB !== ''){
+            let newList = result;
+            myPetList.forEach((element: DogInfo) => {
+                newList.push(element);
+            });
+            newList.push({name: name, type: type, breed: breed, DOB: DOB});
+            console.log(newList.toString())
+            
+            dispatch(setPetList({petList: newList}));
+            dispatch(setIsAddPetOpen({isAddPetOpen: false}))
+        }
+        else{
+            setShowError(true);
+        }
+    }
+
+    function saveRecord(){
+        let newList: any[] = []; 
+        console.log(currentPetIndex)
+        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
+            myPetList[currentPetIndex].records.forEach((element: any) => {
+                newList.push(element);
+            });
+            newList.push({name: vaccineName, dateAdmin: vaccineDate});
+
+            dispatch(setPetRecords({petRecords: newList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
+        }
+        else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
+
+        }
+        else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
+
+        }
+        else{
+            setShowError(true);
+        }
+    }
+
     return(
         <Modal 
           animationType="slide"
@@ -119,8 +203,9 @@ export default function AddNewListItem({itemType, onClose}: any){
                             />
                         </View>
                     </View>
+                    {showError && <Text style={styles.errorText}>Information missing for adding you pet, please add.</Text>}
                     <View style={{margin:'auto'}}>
-                        <AppButton style={styles.loginButton} text={"Save"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: false}))}}/>
+                        <AppButton style={styles.loginButton} text={"Save"} onPress={()=>{saveNewPet();}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: false}))}}/>
                     </View>
                 </View>
@@ -133,8 +218,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                     {currentRecordType === "vaccine" ? <View>
                         <TextInput
                             style={styles.shortTextInput}
-                            onChangeText={setName}
-                            value={name}
+                            onChangeText={setVaccineName}
+                            value={vaccineName}
                             placeholder="Vaccine Name"
                             placeholderTextColor={"#807e7c"}
                         />
@@ -198,8 +283,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                     </View> : null}
 
                     <View style={{margin:'auto'}}>
-                        <AppButton style={styles.loginButton} text={"Save"} onPress={()=>{dispatch(itemType === "pet" ? setIsAddPetOpen({isAddPetOpen: false}) : setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
-                        <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(itemType === "pet" ? setIsAddPetOpen({isAddPetOpen: false}) : setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
+                        <AppButton style={styles.loginButton} text={"Save"} onPress={() => {saveRecord();}}/>
+                        <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
                     </View>
                 </View>
             </View>}

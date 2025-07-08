@@ -24,6 +24,7 @@ const [currentPet, setCurrentPet] = useState({name: '', type: '', breed: '', DOB
 
 useEffect(() => {
   setCurrentPet(petList[currentPetIndex]);
+  console.log(petRecords);
 }, []);
 
 const petRecords = useSelector((store: any)=> {
@@ -46,7 +47,7 @@ return store.userInfo.petRecords;
       <Text style={styles.subTitleText}>Type: {currentPet.type} Breed: {currentPet.breed}</Text>
       <Text style={styles.subTitleText}>DOB: {currentPet.DOB}</Text>
       <View style={{height: '70%', width: '70%', marginTop: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
-        <FlatList data={petRecords[currentPetIndex]} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {dispatch(setCurrentRecordID({currentRecordIndex: index})); dispatch(setCurrentScreen({currentScreen: 'recordDetails'}));}}/>}/>
+        <FlatList data={petList[currentPetIndex].records} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {dispatch(setCurrentRecordID({currentRecordIndex: index})); dispatch(setCurrentScreen({currentScreen: 'recordDetails'}));}}/>}/>
         <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true}));}}/>
       </View>
       <AddNewListItem itemType={"record"}/>

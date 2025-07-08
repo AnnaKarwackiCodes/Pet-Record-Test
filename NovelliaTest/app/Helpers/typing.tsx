@@ -5,4 +5,21 @@ interface DogInfo {
     DOB: string
 }
 
-export type {DogInfo};
+interface VaccineInfo{
+    name: string,
+    date: string
+}
+
+interface AllergyInfo{
+    name: string,
+    reaction: string,
+    severity: string
+}
+
+interface LabInfo{
+    name: string,
+    dosage: string,
+    instructions: string
+}
+
+export type {DogInfo, VaccineInfo, AllergyInfo, LabInfo};

@@ -101,6 +101,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 10
       },
+      errorText:{
+        fontSize: 15,
+        marginTop: 10,
+        color: "#9c0015"
+      },
       formView: {
 
       },

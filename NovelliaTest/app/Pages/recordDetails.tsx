@@ -28,11 +28,11 @@ const currentRecordIndex = useSelector((store: any)=> {
 return store.userInfo.currentRecordIndex;
 });
 
-const [currentRecord, setCurrentRecord] = useState(petRecords[currentPetIndex][currentRecordIndex]||null);
+const [currentRecord, setCurrentRecord] = useState(petList[currentPetIndex].records[currentRecordIndex]||null);
 
 useEffect(() => {
   setCurrentPet(petList[currentPetIndex]);
-  setCurrentRecord(petRecords[currentPetIndex][currentRecordIndex]);
+  setCurrentRecord(petList[currentPetIndex].records[currentRecordIndex]);
 }, []);
 
 
