@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import Dashboard from "./dashboard";
 import PetProfile from "./petProfile";
+import RecordDetails from "./recordDetails";
 
 export default function LoggedInPage() {
 
@@ -27,6 +28,7 @@ export default function LoggedInPage() {
     >
       {myCurrentScreen === 'dashboard'?<Dashboard /> : null}
       {myCurrentScreen === 'petProfile'?<PetProfile /> : null}
+      {myCurrentScreen === 'recordDetails'?<RecordDetails /> : null}
     </View>
   );
 }

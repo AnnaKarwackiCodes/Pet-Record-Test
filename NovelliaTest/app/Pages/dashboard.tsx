@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
-import { setCurrentPetID, setCurrentScreen, setLoginState, setPetList } from "@/Redux/reducers/UserInfo";
+import { setCurrentPetID, setCurrentScreen, setLoginState, setPetList, setPetRecords } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
 import AddNewListItem from "../Components/addNewListItem";
 import { setIsAddPetOpen } from "@/Redux/reducers/SystemSettings";
@@ -34,11 +34,17 @@ useEffect(() => {
 
 useEffect(() => {
   dispatch(setPetList({petList: [
-  {name: "Wulfred", type: "Dog", breed: "corgi", DOB: "07/02/2022"},
-  {name: "Art Jr", type: "Cat", breed: "orange", DOB: "?"},
-  {name: "Raven", type: "Bird", breed: "raven", DOB: "?"},
-  {name: "BunBun", type: "Bunny", breed: "floppy", DOB: "?"},
-]}))
+    {name: "Wulfred", type: "Dog", breed: "corgi", DOB: "07/02/2022"},
+    {name: "Art Jr", type: "Cat", breed: "orange", DOB: "?"},
+    {name: "Raven", type: "Bird", breed: "raven", DOB: "?"},
+    {name: "BunBun", type: "Bunny", breed: "floppy", DOB: "?"},
+  ]}))
+  dispatch(setPetRecords({petRecords:[[{type: "Vaccine", name: "", dateAdmin: "", updatedDate: ""}],[
+    {type: "Allergy", name: "", reaction: "", severity: "", updatedDate: ""}], [
+    {type: "Lab", name: "", dosage: "", instructions: "", updatedDate: ""}], [{type: "Vaccine", name: "", dateAdmin: "", updatedDate: ""},
+    {type: "Allergy", name: "", reaction: "", severity: "", updatedDate: ""},
+    {type: "Lab", name: "", dosage: "", instructions: "", updatedDate: ""},]]}))
+
 }, []);
 
 

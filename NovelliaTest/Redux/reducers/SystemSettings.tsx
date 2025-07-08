@@ -5,7 +5,7 @@ const SystemSettings = createSlice({
     initialState:{
         isAddPetOpen: false,
         isAddRecordOpen: false,
-        currentRecordType: 'vaccine',
+        currentRecordType: '',
     },
     reducers:{
         
