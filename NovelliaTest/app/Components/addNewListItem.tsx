@@ -159,6 +159,7 @@ export default function AddNewListItem({itemType, onClose}: any){
             });
 
             dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
         else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
@@ -173,6 +174,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                     newRecordList.push(element);
                 }
             });
+            dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
         else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
@@ -187,11 +190,12 @@ export default function AddNewListItem({itemType, onClose}: any){
                     newRecordList.push(element);
                 }
             });
+            dispatch(setPetList({petList: newRecordList}));
+            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
         else{
             setShowError(true);
         }
-        dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
     }
 
     return(
@@ -248,7 +252,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                             />
                         </View>
                     </View>
-                    {showError && <Text style={styles.errorText}>Information missing for adding you pet, please add.</Text>}
+                    {showError && <Text style={styles.errorText}>Information missing for adding your pet, please add all information.</Text>}
                     <View style={{margin:'auto'}}>
                         <AppButton style={styles.loginButton} text={"Save"} onPress={()=>{saveNewPet();}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: false}))}}/>
@@ -326,7 +330,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                             />
                         </View>
                     </View> : null}
-
+                    {showError && <Text style={styles.errorText}>Information missing for adding your pet's record, please add all information.</Text>}
                     <View style={{margin:'auto'}}>
                         <AppButton style={styles.loginButton} text={"Save"} onPress={() => {saveRecord();}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))}}/>
