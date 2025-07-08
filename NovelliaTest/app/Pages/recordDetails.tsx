@@ -46,7 +46,7 @@ useEffect(() => {
         marginTop: 15
       }}
     >
-      <AppButton style={styles.confirmButton} text={"Return to Dashboard"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'dashboard'}));}}/>
+      <AppButton style={styles.confirmButton} text={"Return to Profile"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'petProfile'}));}}/>
 
       <Text style={styles.titleText}>{currentPet.name}'s Record</Text>
             {currentRecord.type === "Vaccine" ? <View>

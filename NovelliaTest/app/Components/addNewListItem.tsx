@@ -8,7 +8,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import AnimalTypeSelect from "./animalTypeSelect";
 import RecordSelect from "./recordSelect";
 import { setPetList, setPetRecords } from "@/Redux/reducers/UserInfo";
-import { DogInfo } from "../Helpers/typing";
+import { PetInfo } from "../Helpers/typing";
 
 export default function AddNewListItem({itemType, onClose}: any){
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function AddNewListItem({itemType, onClose}: any){
     const currentPetIndex = useSelector((store: any)=> {
         return store.userInfo.currentPetIndex;
     });
-    const result : DogInfo[] = [];
+    const result : PetInfo[] = [];
     const recordListFormat : any[] = [[]];
     const [myPetList, setMyPetList] = useState(petList || result);
     const [myRecordList, setMyRecordList] = useState(recordList || recordListFormat)
@@ -80,6 +80,14 @@ export default function AddNewListItem({itemType, onClose}: any){
         setType('');
         setBreed('');
         setDOB('');
+        setAllergyName('');
+        setAllergyReaction('');
+        setAllergySeverity('');
+        setVaccineName('');
+        setVaccineDate('');
+        setLabName('');
+        setLabInstruction('');
+        setLabDosage('');
     }, [modalVisible]);
 
     useEffect(() => {
@@ -112,10 +120,10 @@ export default function AddNewListItem({itemType, onClose}: any){
     function saveNewPet(){
         if(name !== '' && type !== '' && breed !== '' && DOB !== ''){
             let newList = result;
-            myPetList.forEach((element: DogInfo) => {
+            myPetList.forEach((element: PetInfo) => {
                 newList.push(element);
             });
-            newList.push({name: name, type: type, breed: breed, DOB: DOB});
+            newList.push({name: name, type: type, breed: breed, DOB: DOB, records: []});
             console.log(newList.toString())
             
             dispatch(setPetList({petList: newList}));
@@ -128,25 +136,62 @@ export default function AddNewListItem({itemType, onClose}: any){
 
     function saveRecord(){
         let newList: any[] = []; 
-        console.log(currentPetIndex)
-        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
-            myPetList[currentPetIndex].records.forEach((element: any) => {
-                newList.push(element);
-            });
-            newList.push({name: vaccineName, dateAdmin: vaccineDate});
+        let newRecordList: any[] = []; 
 
-            dispatch(setPetRecords({petRecords: newList}));
-            dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        var date = mm + '-' + dd + '-' + yyyy;
+
+        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((element: any) => {
+                        newList.push(element);
+                    });
+                    newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date});
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
+
+            dispatch(setPetList({petList: newRecordList}));
         }
         else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
-
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((element: any) => {
+                        newList.push(element);
+                    });
+                    newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date});
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
         }
         else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
-
+            myPetList.forEach((element: PetInfo, index: number) => {
+                if(index === currentPetIndex){
+                    myPetList[currentPetIndex].records.forEach((element: any) => {
+                        newList.push(element);
+                    });
+                    newList.push({type: "Lab", name: vaccineName, dosage: labDosage, instructions: labInstruction, updatedDate: date});
+                    newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
+                }
+                else{
+                    newRecordList.push(element);
+                }
+            });
         }
         else{
             setShowError(true);
         }
+        dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
     }
 
     return(
@@ -240,8 +285,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                     {currentRecordType === "allergy" ? <View>
                         <TextInput
                             style={styles.shortTextInput}
-                            onChangeText={setName}
-                            value={name}
+                            onChangeText={setAllergyName}
+                            value={allergyName}
                             placeholder="Allergy Name"
                             placeholderTextColor={"#807e7c"}
                         />
@@ -249,8 +294,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                             <Text style={styles.bodyText}>Pet's Reaction</Text>
                             <TextInput
                             style={styles.shortTextInput}
-                            onChangeText={setName}
-                            value={name}
+                            onChangeText={setAllergyReaction}
+                            value={allergyReaction}
                             placeholder="Severity of Allergy"
                             placeholderTextColor={"#807e7c"}
                         />
@@ -260,22 +305,22 @@ export default function AddNewListItem({itemType, onClose}: any){
                         <View style={{margin: 'auto'}}>
                             <TextInput
                             style={styles.shortTextInput}
-                            onChangeText={setName}
-                            value={name}
+                            onChangeText={setLabName}
+                            value={labName}
                             placeholder="Lab Name"
                             placeholderTextColor={"#807e7c"}
                         />
                             <TextInput
                                 style={styles.shortTextInput}
-                                onChangeText={setName}
-                                value={name}
+                                onChangeText={setLabDosage}
+                                value={labDosage}
                                 placeholder="Dosage"
                                 placeholderTextColor={"#807e7c"}
                             />
                             <TextInput
                                 style={styles.longTextInput}
-                                onChangeText={setName}
-                                value={name}
+                                onChangeText={setLabInstruction}
+                                value={labInstruction}
                                 placeholder="Instructions"
                                 placeholderTextColor={"#807e7c"}
                             />

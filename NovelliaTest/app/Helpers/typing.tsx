@@ -1,8 +1,9 @@
-interface DogInfo {
+interface PetInfo {
     name: string,
     type: string,
     breed: string,
-    DOB: string
+    DOB: string,
+    records: []
 }
 
 interface VaccineInfo{
@@ -22,4 +23,4 @@ interface LabInfo{
     instructions: string
 }
 
-export type {DogInfo, VaccineInfo, AllergyInfo, LabInfo};
+export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo};
