@@ -7,8 +7,9 @@ import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
 import { setCurrentRecordID, setCurrentScreen, setPetList } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
-import AddNewListItem from "../Components/addNewListItem";
+import AddNewRecord from "../Components/addNewRecord";
 import { setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
+import AddNewPet from "../Components/addNewPet";
 
 export default function PetProfile() {
 const dispatch = useDispatch();
@@ -63,14 +64,16 @@ function deletePetRecord(){
         marginTop: 15,
       }}
     >
-     <AppButton style={styles.returnButton} text={"Back"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'dashboard'}));}}/>
+     <AppButton style={styles.backButton} text={"Back"} onPress={()=>{dispatch(setCurrentScreen({currentScreen: 'dashboard'}));}}/>
       <View 
         style={{
           height: '70%', 
           width: 'auto', 
           marginTop: 10, 
           padding: 20, 
-          backgroundColor:"#faa637",
+          borderColor:"#FB4D27", 
+          borderWidth: 2, 
+          borderRadius:25,
           shadowColor: '#000',
           shadowOffset: {
           width: 0,
@@ -80,18 +83,19 @@ function deletePetRecord(){
           shadowRadius: 4,
           elevation: 5,
           }}>
-        <View style={{backgroundColor: '#fff', borderTopRightRadius: 20, borderTopLeftRadius: 30}}>
+        <View style={{backgroundColor: '#fff', borderTopRightRadius: 20, borderTopLeftRadius: 30, borderColor:"#FB4D27", borderWidth: 2}}>
            <Text style={styles.titleText}>{currentPet.name}'s Profile</Text>
             <Text style={styles.bodyText}>Type: {currentPet.type} </Text>
             <Text style={styles.bodyText}>Breed: {currentPet.breed}</Text>
             <Text style={styles.bodyText}>DOB: {currentPet.DOB}</Text>
             <AppButton style={styles.confirmButton} text={"Edit Profile"} onPress={()=>{dispatch(setIsAddPetOpen({isAddPetOpen: true}));}}/>
         </View>
+        {myPetList[currentPetIndex].records.length === 0 && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text style={styles.bodyText}>No Records Have Been Added</Text></View>}
         <FlatList data={myPetList[currentPetIndex].records} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"record"} onPress={() => {dispatch(setCurrentRecordID({currentRecordIndex: index})); dispatch(setCurrentScreen({currentScreen: 'recordDetails'}));}}/>}/>
         <ListItem itemObj={{addType: "record"}} itemType={"add"} onPress={() => {dispatch(setIsAddRecordOpen({isAddRecordOpen: true}));}}/>
       </View>
       <AppButton style={styles.deleteButton} text={"DELETE PET RECORD"} onPress={()=>{setModalDeleteVisible(true)}}/>
-      <AddNewListItem itemType={"record"}/>
+      <AddNewRecord itemType={"record"}/>
       <Modal 
           animationType="slide"
           transparent={true}
@@ -118,7 +122,7 @@ function deletePetRecord(){
             <AppButton style={styles.returnButton} text={"Cancel"} onPress={()=>{setModalDeleteVisible(false)}}/>
            </View>
         </Modal>
-        <AddNewListItem itemType={'petEdit'}/>
+        <AddNewPet itemType={'petEdit'}/>
     </View>
   );
 }

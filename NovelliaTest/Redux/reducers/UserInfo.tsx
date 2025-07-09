@@ -7,7 +7,7 @@ const UserInfo = createSlice({
         email: '',
         isLoggedIn: false,
         petList: [],
-        petRecords: [[]],
+        vetRecords: [],
         createAnAccount: false,
         isLoggingIn: false,
         currentPetIndex: -1,
@@ -18,14 +18,13 @@ const UserInfo = createSlice({
         setUserInfo: (state, action)=> {
             state.name = action.payload.name;
             state.email = action.payload.email;
-            state.isLoggedIn = action.payload.isLoggedIn;
-            state.petList = action.payload.petList;
+            state.petList = [];
         },
         setPetList: (state, action)=> {
            state.petList = action.payload.petList; 
         },
-        setPetRecords: (state, action)=> {
-           state.petRecords = action.payload.petRecords; 
+        setVetRecords: (state, action)=> {
+           state.vetRecords = action.payload.petRecords; 
         },
         setLoginState: (state, action)=> {
             state.isLoggedIn = action.payload.loggedin;
@@ -48,6 +47,6 @@ const UserInfo = createSlice({
     }
 })
 
-export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn, setCurrentPetID, setPetRecords, setCurrentRecordID, setCurrentScreen} = UserInfo.actions;
+export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn, setCurrentPetID, setVetRecords, setCurrentRecordID, setCurrentScreen} = UserInfo.actions;
 
 export default UserInfo.reducer;

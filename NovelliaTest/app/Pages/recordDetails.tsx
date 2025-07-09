@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
 import { setCurrentScreen, setPetList } from "@/Redux/reducers/UserInfo";
-import AddNewListItem from "../Components/addNewListItem";
 import { setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
+import AddNewRecord from "../Components/addNewRecord";
 
 export default function RecordDetails() {
 const dispatch = useDispatch();
@@ -127,7 +127,7 @@ function deleteRecord(){
             <AppButton style={styles.returnButton} text={"Cancel"} onPress={()=>{setModalVisible(false)}}/>
            </View>
         </Modal>
-        <AddNewListItem itemType={'recordEdit'}/>
+        <AddNewRecord itemType={'recordEdit'}/>
     </View>
   );
 }

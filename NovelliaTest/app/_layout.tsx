@@ -9,6 +9,7 @@ export default function RootLayout() {
       <Stack.Screen name="index" options={{title: 'Home'}} />
       <Stack.Screen name="dashboard" options={{title: 'DashBoard'}} />
       <Stack.Screen name="petProfile" options={{title: 'Pet Profile'}} />
+      <Stack.Screen name="userProfile" options={{title: 'User Profile'}} />
     </Stack>
   </Provider>
   )

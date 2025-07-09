@@ -2,7 +2,7 @@ import { Text, View, Image, Modal, TextInput } from "react-native";
 import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreateAnAccount, setLoginState } from "@/Redux/reducers/UserInfo";
+import { setCreateAnAccount, setLoginState, setUserInfo } from "@/Redux/reducers/UserInfo";
 import { useEffect, useState } from "react";
 
 export default function CreateAccountModal(){
@@ -24,6 +24,30 @@ export default function CreateAccountModal(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showError, setShowError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('');
+
+    function createAccout(){
+        if(name !== '' && email !== '' && password !== '' && confirmPassword !== ''){
+            if(password !== confirmPassword){
+                setErrorMessage("Password doesn't match.")
+                setShowError(true);
+            }
+            else{
+                //proper auth check would go here, on error display a new message but we are just going to straight into the app
+                dispatch(setUserInfo({name: name, email: email}));
+                dispatch(setLoginState({loggedin: true})); dispatch(setCreateAnAccount({createAnAccount: false}))
+            }
+        }
+        else{
+            setErrorMessage("You are missing info to create your account.");
+            setShowError(true);
+        }
+    }
+
+    useEffect(() => {
+        setShowError(false);
+    }, [name, email, password, confirmPassword]);
 
     return(
         <Modal 
@@ -88,8 +112,9 @@ export default function CreateAccountModal(){
                         secureTextEntry={true}
                         autoCorrect={false}
                     />
+                    {showError && <Text style={styles.errorText}>{errorMessage}</Text>}
                     <View style={{margin:'auto', paddingTop: 5, paddingBottom: 5}}>
-                        <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{dispatch(setLoginState({loggedin: true})); dispatch(setCreateAnAccount({createAnAccount: false}))}}/>
+                        <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{createAccout()}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setCreateAnAccount({createAnAccount: false}))}}/>
                     </View>
                 </View>

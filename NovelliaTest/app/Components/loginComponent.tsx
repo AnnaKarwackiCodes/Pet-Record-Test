@@ -10,14 +10,15 @@ export default function loginComponent(){
     const dispatch = useDispatch();
 
     return(
-        <View>
+        <View style={{margin:'auto', padding: 15}}>
             <Image
                 source={require('../Assets/temp.jpg')}
                 style={{width: 100, height: 100, alignSelf: 'center'}}
             />
             <View style={styles.spacingPadding}>
-                <Text style={styles.titleText}>Login</Text>
-                <View style={styles.spacingPadding}>
+                <Text style={styles.titleText}>Pet-cords</Text>
+                <Text style={styles.bodyText}>Better tracking for your pet's vet records</Text>
+                <View style={{margin:'auto', padding: 15}}>
                     <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{dispatch(setCreateAnAccount({createAnAccount: true}))}}/>
                 </View>
             </View>

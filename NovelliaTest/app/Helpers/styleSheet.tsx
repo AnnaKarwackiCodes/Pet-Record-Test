@@ -71,6 +71,25 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
       },
+      backButton: {
+        backgroundColor: "#FB4D27",
+        width: 'auto',
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+      },
       CalendarButton: {
         backgroundColor: "#FB4D27",
         width: 200,
@@ -111,9 +130,6 @@ const styles = StyleSheet.create({
         padding: 10, 
         borderRadius: 4,
         margin: 5,
-        position: 'absolute',
-        top: 0,
-        left: 0,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -126,13 +142,13 @@ const styles = StyleSheet.create({
       titleText: {
         textAlign: 'center',
         fontSize: 32,
-        marginTop: 15,
+        marginTop: 5,
         fontWeight: 'bold'
       },
       subTitleText: {
         textAlign: 'center',
         fontSize: 26,
-        marginTop: 10,
+        marginTop: 0,
         fontWeight: '600'
       },
       bodyText: {
