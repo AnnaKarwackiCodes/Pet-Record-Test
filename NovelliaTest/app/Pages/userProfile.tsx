@@ -2,10 +2,10 @@ import { Text, View, Image, ScrollView, FlatList, Modal } from "react-native";
 import { useDispatch, useSelector } from 'react-redux'
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
-import { setCurrentScreen, setCurrentVetID, setLoginState, setVetRecords } from "@/Redux/reducers/UserInfo";
+import { setCurrentScreen, setCurrentVetID, setLoginState, setVetRecords, resetUser } from "@/Redux/reducers/UserInfo";
 import AddNewVet from "../Components/addNewVet";
 import ListItem from "../Components/listItem";
-import { setIsAddVetOpen } from "@/Redux/reducers/SystemSettings";
+import { setIsAddVetOpen, resetSystem } from "@/Redux/reducers/SystemSettings";
 import { useEffect, useState } from "react";
 
 export default function UserProfile() {
@@ -57,6 +57,11 @@ function deleteVetRecord(){
   setModalVisible(false);
 }
 
+function logout(){
+    dispatch(resetSystem({}));
+    dispatch(resetUser({}));
+}
+
   return (
     <View
       style={{
@@ -90,7 +95,7 @@ function deleteVetRecord(){
            <Text style={styles.titleText}>Profile</Text>
             <Text style={styles.bodyText}>Name: {userName} </Text>
             <Text style={styles.bodyText}>Email: {userEmail} </Text>
-            <AppButton style={styles.logoutButton} text={"Logout"} onPress={()=>{dispatch(setLoginState({loggedin: false}));}}/>
+            <AppButton style={styles.logoutButton} text={"Logout"} onPress={()=>{logout()}}/>
         </View>
         <Text style={styles.subTitleText}>Your Vets</Text>
         {myVetList.length === 0 && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text style={styles.bodyText}>No Vets Have Been Added</Text></View>}

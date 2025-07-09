@@ -398,7 +398,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                             />
                         </View>
                     </View> : null}
-                    <Text style={styles.bodyText}>What Vet did this?</Text>
+                    <Text style={styles.bodyText}>Vet Associated:</Text>
                      <Dropdown
                             label="Select Vet"
                             placeholder="Select an option..."

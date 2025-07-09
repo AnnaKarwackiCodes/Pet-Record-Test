@@ -48,9 +48,22 @@ const UserInfo = createSlice({
         setCurrentScreen: (state, action) => {
             state.currentScreen = action.payload.currentScreen;
         },
+        resetUser: (state, action) => {
+            state.name = '';
+            state.email = '';
+            state.isLoggedIn = false;
+            state.petList = [];
+            state.vetRecords = [];
+            state.createAnAccount = false;
+            state.isLoggingIn = false;
+            state.currentPetIndex = -1;
+            state.currentScreen = 'dashboard';
+            state.currentRecordIndex = -1;
+            state.currentVetIndex = -1;
+        },
     }
 })
 
-export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn, setCurrentPetID, setVetRecords, setCurrentRecordID, setCurrentScreen, setCurrentVetID} = UserInfo.actions;
+export const {setUserInfo, setPetList, setLoginState, setCreateAnAccount, setIsLoggingIn, setCurrentPetID, setVetRecords, setCurrentRecordID, setCurrentScreen, setCurrentVetID, resetUser} = UserInfo.actions;
 
 export default UserInfo.reducer;
