@@ -380,7 +380,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                     />
                     <View style={{margin: 'auto'}}>
                         <Text style={styles.bodyText}>Select Your Pet's Birthday:</Text>
-                        <View style={{ alignContent: 'center', margin: 20, marginTop:5, width: '100%',}}>
+                        <View style={{ alignContent: 'center', marginBottom: 5, marginTop:5, width: '100%',}}>
                             <View style={{margin: 'auto'}}>
                                 <AppButton text={DOB === '' ? "Select Birthday" : DOB} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
                             </View>
@@ -427,7 +427,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                         />
                         <View style={{margin: 'auto'}}>
                             <Text style={styles.bodyText}>Date Administered</Text>
-                            <View style={{ alignContent: 'center', margin: 10, left: 0, width: '100%'}}>
+                            <View style={{ alignContent: 'center', marginBottom: 5, left: 0, width: '100%'}}>
                                 <View style={{margin: 'auto'}}>
                                     <AppButton text={vaccineDate === '' ? "Select Date" : vaccineDate} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
                                 </View>

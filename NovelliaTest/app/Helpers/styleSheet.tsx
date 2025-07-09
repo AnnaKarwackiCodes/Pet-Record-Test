@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
       },
       confirmButton: {
-        backgroundColor: "#578FCA",
+        backgroundColor: "#FB4D27",
         width: 'auto',
         height: 50,
         padding: 10, 
@@ -36,7 +36,9 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       deleteButton: {
-        backgroundColor: "#d40824",
+        backgroundColor: "#de7684",
+        borderColor: '#d40824',
+        borderWidth: 2,
         width: 'auto',
         height: 50,
         padding: 10, 
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       returnButton: {
-        backgroundColor: "#578FCA",
+        backgroundColor: "#FB4D27",
         width: 'auto',
         height: 50,
         padding: 10, 
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
         left: 0,
       },
       CalendarButton: {
-        backgroundColor: "#578FCA",
+        backgroundColor: "#FB4D27",
         width: 200,
         height: 50,
         padding: 10, 
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       loginButton: {
-        backgroundColor: "#3674B5",
+        backgroundColor: "#851800",
         width: 200,
         height: 50,
         padding: 10, 
@@ -124,17 +126,27 @@ const styles = StyleSheet.create({
       titleText: {
         textAlign: 'center',
         fontSize: 32,
-        marginTop: 15
+        marginTop: 15,
+        fontWeight: 'bold'
       },
       subTitleText: {
         textAlign: 'center',
         fontSize: 26,
-        marginTop: 10
+        marginTop: 10,
+        fontWeight: '600'
       },
       bodyText: {
         textAlign: 'center',
         fontSize: 20,
-        marginTop: 10
+        marginTop: 10,
+        fontWeight: '500'
+      },
+      bodyTextWhite: {
+        textAlign: 'center',
+        fontSize: 20,
+        marginTop: 10,
+        fontWeight: '500',
+        color: '#fff'
       },
       errorText:{
         fontSize: 15,
