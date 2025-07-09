@@ -2,7 +2,7 @@ import { Text, View, Image, Modal, TouchableHighlight, TextInput } from "react-n
 import styles from "../Helpers/styleSheet";
 import AppButton from "./appButton";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { setCurrentPetType, setCurrentRecordType, setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import AnimalTypeSelect from "./animalTypeSelect";
@@ -64,6 +64,8 @@ export default function AddNewListItem({itemType, onClose}: any){
     const [labDosage, setLabDosage] = useState('');
     const [labInstruction, setLabInstruction] = useState('');
 
+    const [showCalendar, setShowCalendar] = useState(false);
+
     useEffect(()=>{
         setType(curPetType);
     }, [curPetType]);
@@ -93,6 +95,7 @@ export default function AddNewListItem({itemType, onClose}: any){
         setLabName('');
         setLabInstruction('');
         setLabDosage('');
+        setShowCalendar(false);
 
         if(itemType ==="petEdit"){
             console.log(myPetList[currentPetIndex]);
@@ -100,7 +103,8 @@ export default function AddNewListItem({itemType, onClose}: any){
             setType(myPetList[currentPetIndex].type);
             setBreed(myPetList[currentPetIndex].breed);
             setDOB(myPetList[currentPetIndex].DOB);
-            setDate(new Date());
+            
+            (new Date());
             dispatch(setCurrentPetType({currentPetType: myPetList[currentPetIndex].type}))
         }
         else if(itemType === "recordEdit"){
@@ -136,11 +140,11 @@ export default function AddNewListItem({itemType, onClose}: any){
         
         //let myDate = currentDate.getMonth().toString() + "/" + currentDate.getDate().toString() + "/" + currentDate.getFullYear().toString();
         let myDate = currentDate.toLocaleDateString();
-        console.log(myDate);
-        if(itemType === "pet" || itemType === "petEdit"){
+        console.log(Date.parse('2025-7-2'));
+        if(itemType === "pet" || itemType === "petEdit" && myDate !== undefined){
             setDOB(myDate);
         }
-        else if(itemType === "record" || itemType === "recordEdit"){
+        else if(itemType === "record" || itemType === "recordEdit" && myDate !== undefined){
             setVaccineDate(myDate);
         }
     };
@@ -184,8 +188,6 @@ export default function AddNewListItem({itemType, onClose}: any){
                     newList.push(element);
                 }
             });
-            
-            
             dispatch(setPetList({petList: newList}));
             dispatch(setIsAddPetOpen({isAddPetOpen: false}))
         }
@@ -365,7 +367,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                         placeholder="Your Pet's Name"
                         placeholderTextColor={"#807e7c"}
                     />
-                    <View>
+                    <View style={{margin: 'auto'}}>
+                        <Text style={styles.bodyText}>Animal Type:</Text>
                         <AnimalTypeSelect />
                     </View>
                     <TextInput
@@ -376,9 +379,12 @@ export default function AddNewListItem({itemType, onClose}: any){
                         placeholderTextColor={"#807e7c"}
                     />
                     <View style={{margin: 'auto'}}>
-                        <Text style={styles.bodyText}>Select Your Pet's Birthday</Text>
-                        <View style={{ alignContent: 'center', margin: 20, left: 30, width: '100%', paddingRight:20}}>
-                            <DateTimePicker
+                        <Text style={styles.bodyText}>Select Your Pet's Birthday:</Text>
+                        <View style={{ alignContent: 'center', margin: 20, marginTop:5, width: '100%',}}>
+                            <View style={{margin: 'auto'}}>
+                                <AppButton text={DOB === '' ? "Select Birthday" : DOB} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
+                            </View>
+                            {showCalendar && <DateTimePicker
                                 style={{width: '100%', margin:'auto', }}
                                 testID="dateTimePicker"
                                 value={date}
@@ -386,7 +392,8 @@ export default function AddNewListItem({itemType, onClose}: any){
                                 onChange={onChange}
                                 themeVariant={"light"}
                                 maximumDate={new Date()}
-                            />
+                                 display="inline"
+                            />}
                         </View>
                     </View>
                     {showError && <Text style={styles.errorText}>Information missing for adding your pet, please add all information.</Text>}
@@ -399,7 +406,9 @@ export default function AddNewListItem({itemType, onClose}: any){
              {(itemType === "record" || itemType === "recordEdit") && <View style={styles.spacingPadding}>
                 <Text style={styles.titleText}>{itemType === "pet" ? "Add a New Record" : "Edit Pet's Record" }</Text>
                 <Text style={styles.bodyText}>Select Record Type</Text>
-                <RecordSelect />
+                <View style={{margin: 'auto'}}>
+                    <RecordSelect />
+                </View>
                 <View style={styles.spacingPadding}>
                     {currentRecordType === "Vaccine" ? <View>
                         <TextInput
@@ -411,16 +420,21 @@ export default function AddNewListItem({itemType, onClose}: any){
                         />
                         <View style={{margin: 'auto'}}>
                             <Text style={styles.bodyText}>Date Administered</Text>
-                            <View style={{ alignContent: 'center', margin: 20, left: 0, width: '100%', paddingRight:20}}>
-                                <DateTimePicker
+                            <View style={{ alignContent: 'center', margin: 10, left: 0, width: '100%'}}>
+                                <View style={{margin: 'auto'}}>
+                                    <AppButton text={vaccineDate === '' ? "Select Date" : vaccineDate} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
+                                </View>
+                                {showCalendar && <DateTimePicker
                                     style={{width: '100%', margin:'auto', }}
                                     testID="dateTimePicker"
                                     value={date}
                                     mode={'date'}
                                     onChange={onChange}
                                     themeVariant={"light"}
-                                />
-                            </View>
+                                    maximumDate={new Date()}
+                                    display="inline"
+                                />}
+                                </View>
                         </View>
                     </View> : null}
                     {currentRecordType === "Allergy" ? <View>

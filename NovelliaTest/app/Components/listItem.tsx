@@ -62,14 +62,14 @@ export default function ListItem({itemObj, itemType, onPress}: any){
                 {(itemType === "record") ? <> 
                 <View style={{margin:'auto', flexDirection: 'column'}}>
                     <Text style={styles.bodyText}> Record Type: {itemObj.type}</Text>
-                    <Text style={styles.bodyText}> Last Updated: {itemObj.updatedDate}</Text>
+                    <Text style={styles.bodyText}> Name: {itemObj.name}</Text>
                 </View> 
-                <View style={{position:'fixed', right: 5, top:23}}>
+                <View style={{position:'fixed', right: 5, top:10}}>
                     <AppButton style={styles.confirmButton} text={"View Record"} onPress={onPress} />
                 </View>
                 </>: <></> }
                 {(itemType === "add") ? <View style={{margin:'auto'}}> 
-                    <Text style={styles.bodyText}> Add New </Text>
+                    <Text style={styles.bodyText}> Add New {itemObj.addType === "record"? "Record" : "Pet"}</Text>
                 </View>:<></>}
             </View>
         </TouchableHighlight>

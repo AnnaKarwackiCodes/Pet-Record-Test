@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
       shortTextInput: {
         height: 40,
-        margin: 12,
+        margin: 'auto',
+        marginTop: 10, 
         borderWidth: 1,
         padding: 10,
         width: 250,
@@ -68,6 +69,23 @@ const styles = StyleSheet.create({
         elevation: 5,
         top: 0,
         left: 0,
+      },
+      CalendarButton: {
+        backgroundColor: "#578FCA",
+        width: 200,
+        height: 50,
+        padding: 10, 
+        borderRadius: 4,
+        margin: 5,
+        marginTop: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
       },
       loginButton: {
         backgroundColor: "#3674B5",
