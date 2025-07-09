@@ -147,15 +147,16 @@ const styles = StyleSheet.create({
       },
       subTitleText: {
         textAlign: 'center',
-        fontSize: 26,
+        fontSize: 24,
         marginTop: 0,
         fontWeight: '600'
       },
       bodyText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 17,
         marginTop: 10,
-        fontWeight: '500'
+        fontWeight: '500',
+        flexWrap: 'wrap'
       },
       bodyTextWhite: {
         textAlign: 'center',

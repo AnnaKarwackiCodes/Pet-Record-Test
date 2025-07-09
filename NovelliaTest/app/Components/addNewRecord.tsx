@@ -47,6 +47,7 @@ export default function AddNewRecord({itemType, onClose}: any){
     const [labInstruction, setLabInstruction] = useState('');
 
     const [showCalendar, setShowCalendar] = useState(false);
+    const [vet, setVet] = useState('');
 
     const [currentRecordType, setCurRecordType] = useState(curRecordType || '')
     useEffect(()=>{
@@ -69,6 +70,7 @@ export default function AddNewRecord({itemType, onClose}: any){
         setLabInstruction('');
         setLabDosage('');
         setShowCalendar(false);
+        setVet('');
 
         if(itemType === "recordEdit"){
             let record = myPetList[currentPetIndex].records[currentRecordIndex];
@@ -380,6 +382,17 @@ export default function AddNewRecord({itemType, onClose}: any){
                             />
                         </View>
                     </View> : null}
+                     <Dropdown
+                            label="Select Vet"
+                            placeholder="Select an option..."
+                            options={[
+                                { label: 'Mild', value: 'Mild' },
+                                { label: 'Severe', value: 'Severe' },
+                            ]}
+                            selectedValue={vet}
+                            onValueChange={(value) => setVet(value)}
+                            primaryColor={'red'}
+                            />
                     {showError && <Text style={styles.errorText}>Information missing for adding your pet's record, please add all information.</Text>}
                     <View style={{margin:'auto'}}>
                         <AppButton style={styles.loginButton} text={"Save"} onPress={() => {if(itemType === "record"){saveRecord();}else{saveRecordEdit();}}}/>

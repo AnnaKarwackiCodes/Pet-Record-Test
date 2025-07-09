@@ -5,7 +5,6 @@ import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
 import { setCurrentPetID, setCurrentScreen } from "@/Redux/reducers/UserInfo";
 import ListItem from "../Components/listItem";
-import AddNewListItem from "../Components/addNewRecord";
 import { setIsAddPetOpen } from "@/Redux/reducers/SystemSettings";
 import AddNewPet from "../Components/addNewPet";
 

@@ -14,19 +14,22 @@ interface VetInfo {
 
 interface VaccineInfo{
     name: string,
-    date: string
+    date: string,
+    vet: string,
 }
 
 interface AllergyInfo{
     name: string,
     reaction: string,
-    severity: string
+    severity: string,
+    vet: string
 }
 
 interface LabInfo{
     name: string,
     dosage: string,
-    instructions: string
+    instructions: string,
+    vet: string
 }
 
 export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo, VetInfo};

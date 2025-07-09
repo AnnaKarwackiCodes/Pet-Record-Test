@@ -2,7 +2,11 @@ import { Text, View, Image, ScrollView, FlatList, Modal } from "react-native";
 import { useDispatch, useSelector } from 'react-redux'
 import AppButton from "../Components/appButton";
 import styles from "../Helpers/styleSheet";
-import { setCurrentScreen, setLoginState } from "@/Redux/reducers/UserInfo";
+import { setCurrentScreen, setCurrentVetID, setLoginState } from "@/Redux/reducers/UserInfo";
+import AddNewVet from "../Components/addNewVet";
+import ListItem from "../Components/listItem";
+import { setIsAddVetOpen } from "@/Redux/reducers/SystemSettings";
+import { useEffect, useState } from "react";
 
 export default function UserProfile() {
 const dispatch = useDispatch();
@@ -13,6 +17,30 @@ const userName = useSelector((store: any)=> {
 const userEmail = useSelector((store: any)=> {
     return store.userInfo.email;
 });
+
+const vetList = useSelector((store: any)=> {
+    return store.userInfo.vetRecords;
+});
+const vetID = useSelector((store: any)=> {
+    return store.userInfo.currentVetIndex;
+});
+
+const [myVetList, setMyVetList] = useState(vetList||[]);
+const [myVetID, setMyVetID] = useState(vetID||-1);
+const [modalVisible, setModalVisible] = useState(false);
+const [curVet, setCurVet] = useState({practiceName: '', phoneNumber: '', vetName: ''});
+const [addType, setAddType] = useState('vet');
+
+useEffect(() => {
+    setMyVetList(vetList);
+}, [vetList]);
+
+useEffect(() => {
+    setMyVetID(vetID);
+    if(vetID !== -1){
+        setCurVet(myVetList[vetID]);
+    }
+}, [vetID]);
 
   return (
     <View
@@ -45,11 +73,48 @@ const userEmail = useSelector((store: any)=> {
           }}>
         <View style={{backgroundColor: '#fff', borderTopRightRadius: 20, borderTopLeftRadius: 30, borderWidth: 2, borderColor:"#FB4D27", padding: 15, width: 300}}>
            <Text style={styles.titleText}>Profile</Text>
-            <Text style={styles.bodyText}>Name: {userEmail} </Text>
+            <Text style={styles.bodyText}>Name: {userName} </Text>
             <Text style={styles.bodyText}>Email: {userEmail} </Text>
             <AppButton style={styles.logoutButton} text={"Logout"} onPress={()=>{dispatch(setLoginState({loggedin: false}));}}/>
         </View>
         <Text style={styles.subTitleText}>Your Vets</Text>
+        
+        <FlatList data={myVetList} renderItem={({item, index})=> <ListItem itemObj={item} itemType={"vet"} onPress={() => {setModalVisible(true); dispatch(setCurrentVetID({currentVetIndex: index}))}}/>}/>
+        <ListItem itemObj={{addType: "vet"}} itemType={"add"} onPress={() => {setModalVisible(false); setAddType('vet'); dispatch(setIsAddVetOpen({isAddVetOpen: true}));}}/>
+        <View>
+            <AddNewVet itemType={addType} />
+             <Modal 
+                transparent={true}
+                visible={modalVisible} 
+                presentationStyle={"overFullScreen"}>
+            <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 20,
+                    padding: 35,
+                    alignItems: 'center',
+                    shadowColor: '#000',
+                    width: '80%',
+                    margin: 'auto',
+                    shadowOffset: {
+                    width: 0,
+                    height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 4,
+                    elevation: 5,}}>
+            <View style={styles.spacingPadding}>
+                <Text style={styles.titleText}>Vet Profile</Text>
+                <View style={styles.spacingPadding}>
+                    <Text style={styles.bodyText}>Vet Office Name: {curVet.practiceName}</Text>
+                    <Text style={styles.bodyText}>Phone Number: {curVet.phoneNumber}</Text>
+                    <Text style={styles.bodyText}>Vet's Name: {curVet.vetName}</Text>
+                    <AppButton style={styles.confirmButton} text={"Close"} onPress={() => {setModalVisible(false)}} />
+                    <AppButton style={styles.confirmButton} text={"Edit"} onPress={() => {setModalVisible(false); setAddType('vetEdit'); dispatch(setIsAddVetOpen({isAddVetOpen: true}));}} />
+                </View>
+            </View>
+            </View>
+        </Modal>
+        </View>
       </View>
     </View>
   );
