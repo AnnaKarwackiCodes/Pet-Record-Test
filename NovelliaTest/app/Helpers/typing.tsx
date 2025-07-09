@@ -32,4 +32,9 @@ interface LabInfo{
     vet: string
 }
 
-export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo, VetInfo};
+interface VetDropDown{
+    label: string,
+    value: string
+}
+
+export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo, VetInfo, VetDropDown};

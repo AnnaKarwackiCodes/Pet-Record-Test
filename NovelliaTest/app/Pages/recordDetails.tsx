@@ -84,18 +84,21 @@ function deleteRecord(){
             {currentRecord.type === "Vaccine" ? <View style={{marginBottom: 25}}>
                 <Text style={styles.subTitleText}>Vaccine Name: {currentRecord.name}</Text>
                 <Text style={styles.subTitleText}>Date Administered: {currentRecord.dateAdmin}</Text>
+                <Text style={styles.subTitleText}>Vet: {currentRecord.vet}</Text>
                 <Text style={styles.bodyText}>Record Last Update: {currentRecord.updatedDate}</Text>
             </View> : null}
             {currentRecord.type === "Allergy" ? <View style={{marginBottom: 25}}>
                 <Text style={styles.subTitleText}>Allergy Name: {currentRecord.name}</Text>
                 <Text style={styles.subTitleText}>Pet's Reaction: {currentRecord.reaction}</Text>
                 <Text style={styles.subTitleText}>Reaction Severity: {currentRecord.severity}</Text>
+                <Text style={styles.subTitleText}>Vet: {currentRecord.vet}</Text>
                 <Text style={styles.bodyText}>Record Last Update: {currentRecord.updatedDate}</Text>
             </View> : null}
             {currentRecord.type === "Lab" ? <View style={{marginBottom: 25}}>
                 <Text style={styles.subTitleText}>Lab Name: {currentRecord.name}</Text>
                 <Text style={styles.subTitleText}>Dosage: {currentRecord.dosage}</Text>
                 <Text style={styles.subTitleText}>Instructions: {currentRecord.instructions}</Text>
+                <Text style={styles.subTitleText}>Vet: {currentRecord.vet}</Text>
                 <Text style={styles.bodyText}>Record Last Update: {currentRecord.updatedDate}</Text>
             </View> : null}
         </View>

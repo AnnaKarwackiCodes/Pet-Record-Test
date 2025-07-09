@@ -8,7 +8,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import Dropdown from 'react-native-input-select';
 import RecordSelect from "./recordSelect";
 import { setPetList } from "@/Redux/reducers/UserInfo";
-import { PetInfo } from "../Helpers/typing";
+import { PetInfo, VetDropDown, VetInfo } from "../Helpers/typing";
 
 export default function AddNewRecord({itemType, onClose}: any){
     const dispatch = useDispatch();
@@ -30,6 +30,9 @@ export default function AddNewRecord({itemType, onClose}: any){
     const currentRecordIndex = useSelector((store: any)=> {
         return store.userInfo.currentRecordIndex;
     });
+    const vetList = useSelector((store: any)=> {
+        return store.userInfo.vetRecords;
+    });
     const result : PetInfo[] = [];
     const [myPetList, setMyPetList] = useState(petList || result);
 
@@ -48,6 +51,9 @@ export default function AddNewRecord({itemType, onClose}: any){
 
     const [showCalendar, setShowCalendar] = useState(false);
     const [vet, setVet] = useState('');
+    const [myVetList, setMyVetList] = useState(vetList||[]);
+    const dropdown : any[] = [];
+    const [vetDropDown, setVetDropDown] = useState(dropdown);
 
     const [currentRecordType, setCurRecordType] = useState(curRecordType || '')
     useEffect(()=>{
@@ -58,6 +64,15 @@ export default function AddNewRecord({itemType, onClose}: any){
     useEffect(() => {
         setModalVisible(isAddRecordOpen);
     }, [isAddRecordOpen]);
+
+    useEffect(() => {
+        setMyVetList(vetList);
+        let temp = dropdown;
+        vetList.forEach((element: any) => {
+            temp.push({label: element.vetName, value: element.vetName});
+        });
+        setVetDropDown(temp);
+    }, [vetList]);
 
     useEffect(() => {
         dispatch(setCurrentRecordType({curRecordType: ''}));
@@ -92,6 +107,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                 setLabInstruction(record.instructions);
                 setLabDosage(record.dosage);
             }
+            setVet(record.vet);
         }
     }, [modalVisible]);
 
@@ -133,7 +149,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
                         if(id === currentRecordIndex){
-                            newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date});
+                            newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date, vet:vet});
                         }
                         else{
                             newList.push(ele);
@@ -154,7 +170,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id:number) => {
                         if(id === currentRecordIndex){
-                            newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date});
+                            newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date, vet:vet});
                         }
                         else{
                             newList.push(ele);
@@ -174,7 +190,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
                         if(id === currentRecordIndex){
-                            newList.push({type: "Lab", name: vaccineName, dosage: labDosage, instructions: labInstruction, updatedDate: date});
+                            newList.push({type: "Lab", name: labName, dosage: labDosage, instructions: labInstruction, updatedDate: date, vet:vet});
                         }
                         else{
                             newList.push(ele);
@@ -210,7 +226,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
                         newList.push(ele);
                     });
-                    newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date});
+                    newList.push({type: "Vaccine", name: vaccineName, dateAdmin: vaccineDate, updatedDate: date, vet:vet});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
                 }
                 else{
@@ -227,7 +243,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
                         newList.push(ele);
                     });
-                    newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date});
+                    newList.push({type: "Allergy", name: allergyName, reaction: allergyReaction, severity: allergySeverity, updatedDate: date, vet:vet});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
                 }
                 else{
@@ -243,7 +259,7 @@ export default function AddNewRecord({itemType, onClose}: any){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
                         newList.push(ele);
                     });
-                    newList.push({type: "Lab", name: vaccineName, dosage: labDosage, instructions: labInstruction, updatedDate: date});
+                    newList.push({type: "Lab", name: labName, dosage: labDosage, instructions: labInstruction, updatedDate: date, vet:vet});
                     newRecordList.push({name: element.name, type: element.type, breed: element.breed, DOB: element.DOB, records: newList})
                 }
                 else{
@@ -382,13 +398,11 @@ export default function AddNewRecord({itemType, onClose}: any){
                             />
                         </View>
                     </View> : null}
+                    <Text style={styles.bodyText}>What Vet did this?</Text>
                      <Dropdown
                             label="Select Vet"
                             placeholder="Select an option..."
-                            options={[
-                                { label: 'Mild', value: 'Mild' },
-                                { label: 'Severe', value: 'Severe' },
-                            ]}
+                            options={vetDropDown}
                             selectedValue={vet}
                             onValueChange={(value) => setVet(value)}
                             primaryColor={'red'}
