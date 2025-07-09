@@ -5,6 +5,7 @@ const SystemSettings = createSlice({
     initialState:{
         isAddPetOpen: false,
         isAddRecordOpen: false,
+        isAddVetOpen: false,
         currentRecordType: '',
         currentPetType: '',
     },
@@ -16,6 +17,9 @@ const SystemSettings = createSlice({
         setIsAddRecordOpen: (state, action)=> {
             state.isAddRecordOpen = action.payload.isAddRecordOpen;
         },
+        setIsAddVetOpen: (state, action)=> {
+            state.isAddVetOpen = action.payload.isAddVetOpen;
+        },
         setCurrentRecordType: (state, action) => {
             state.currentRecordType = action.payload.currentRecordType;
         },
@@ -25,6 +29,6 @@ const SystemSettings = createSlice({
     }
 })
 
-export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType, setCurrentPetType} = SystemSettings.actions;
+export const {setIsAddPetOpen, setIsAddRecordOpen, setCurrentRecordType, setCurrentPetType, setIsAddVetOpen} = SystemSettings.actions;
 
 export default SystemSettings.reducer;

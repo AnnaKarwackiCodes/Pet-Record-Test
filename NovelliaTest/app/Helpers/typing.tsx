@@ -6,6 +6,12 @@ interface PetInfo {
     records: []
 }
 
+interface VetInfo {
+    practiceName: string,
+    phoneNumber: string,
+    vetName: string
+}
+
 interface VaccineInfo{
     name: string,
     date: string
@@ -23,4 +29,4 @@ interface LabInfo{
     instructions: string
 }
 
-export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo};
+export type {PetInfo, VaccineInfo, AllergyInfo, LabInfo, VetInfo};

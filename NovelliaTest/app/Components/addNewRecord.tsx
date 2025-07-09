@@ -5,17 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { use, useEffect, useState } from "react";
 import { setCurrentPetType, setCurrentRecordType, setIsAddPetOpen, setIsAddRecordOpen } from "@/Redux/reducers/SystemSettings";
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import AnimalTypeSelect from "./animalTypeSelect";
+import Dropdown from 'react-native-input-select';
 import RecordSelect from "./recordSelect";
-import { setPetList, setPetRecords } from "@/Redux/reducers/UserInfo";
+import { setPetList } from "@/Redux/reducers/UserInfo";
 import { PetInfo } from "../Helpers/typing";
 
 export default function AddNewRecord({itemType, onClose}: any){
     const dispatch = useDispatch();
 
-    const curPetType = useSelector((store: any)=> {
-        return store.systemSettings.currentPetType;
-    });
      const curRecordType = useSelector((store: any)=> {
         return store.systemSettings.currentRecordType;
     });
@@ -36,7 +33,6 @@ export default function AddNewRecord({itemType, onClose}: any){
     const result : PetInfo[] = [];
     const [myPetList, setMyPetList] = useState(petList || result);
 
-    const [type, setType] = useState(curPetType || '');
     const [date, setDate] = useState(new Date())
 
     const [vaccineName, setVaccineName] = useState('');
@@ -51,10 +47,6 @@ export default function AddNewRecord({itemType, onClose}: any){
     const [labInstruction, setLabInstruction] = useState('');
 
     const [showCalendar, setShowCalendar] = useState(false);
-
-    useEffect(()=>{
-        setType(curPetType);
-    }, [curPetType]);
 
     const [currentRecordType, setCurRecordType] = useState(curRecordType || '')
     useEffect(()=>{
@@ -335,15 +327,32 @@ export default function AddNewRecord({itemType, onClose}: any){
                             placeholder="Allergy Name"
                             placeholderTextColor={"#807e7c"}
                         />
-                        <View style={{margin: 'auto'}}>
+                        <View style={{margin: 'auto', width: 200}}>
                             <Text style={styles.bodyText}>Pet's Reaction</Text>
-                            <TextInput
-                            style={styles.shortTextInput}
-                            onChangeText={setAllergyReaction}
-                            value={allergyReaction}
-                            placeholder="Severity of Allergy"
-                            placeholderTextColor={"#807e7c"}
-                        />
+                            <Dropdown
+                            label="Reaction Types"
+                            placeholder="Select an option..."
+                            options={[
+                                { label: 'Hives', value: 'Hives' },
+                                { label: 'Rash', value: 'Rash' },
+                                { label: 'Swelling', value: 'Swelling' },
+                            ]}
+                            selectedValue={allergyReaction}
+                            onValueChange={(value) => setAllergyReaction(value)}
+                            primaryColor={'red'}
+                            />
+                            <Text style={styles.bodyText}>Reaction Severity</Text>
+                            <Dropdown
+                            label="Sererity Types"
+                            placeholder="Select an option..."
+                            options={[
+                                { label: 'Mild', value: 'Mild' },
+                                { label: 'Severe', value: 'Severe' },
+                            ]}
+                            selectedValue={allergySeverity}
+                            onValueChange={(value) => setAllergySeverity(value)}
+                            primaryColor={'red'}
+                            />
                         </View>
                     </View> : null}
                     {currentRecordType ==="Lab" ? <View>
