@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
       bodyTextWhite: {
         textAlign: 'center',
         fontSize: 20,
-        marginTop: 10,
+        marginTop: 5,
         fontWeight: '500',
         color: '#fff'
       },

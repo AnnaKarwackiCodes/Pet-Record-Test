@@ -23,7 +23,6 @@ const petList = useSelector((store: any)=> {
 
 const [currentPet, setCurrentPet] = useState({name: '', type: '', breed: '', DOB: ''});
 const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
-const [modalEditVisible, setModalEditVisible] = useState(false);
 const [myPetList, setMyPetList] = useState(petList||null);
 
 useEffect(() => {
