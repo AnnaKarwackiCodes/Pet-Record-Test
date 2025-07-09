@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         width: 250,
-        textAlign: 'center',
         fontSize: 20,
       },
       longTextInput:{
@@ -104,15 +103,15 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       logoutButton: {
-        backgroundColor: "#b57336",
-        width: 100,
+        backgroundColor: "#b55636",
+        width: 'auto',
         height: 50,
         padding: 10, 
         borderRadius: 4,
         margin: 5,
         position: 'absolute',
         top: 0,
-        right: 0,
+        left: 0,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
       formView: {
 
       },
-      spacingPadding: {paddingTop: 25, paddingBottom: 25}
+      spacingPadding: {paddingTop: 5, paddingBottom: 5}
     });
 
 export default styles;

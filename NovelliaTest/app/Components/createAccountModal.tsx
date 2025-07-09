@@ -38,6 +38,7 @@ export default function CreateAccountModal(){
                     alignItems: 'center',
                     shadowColor: '#000',
                     width: '80%',
+                    height: '90%',
                     margin: 'auto',
                     shadowOffset: {
                     width: 0,
@@ -59,6 +60,7 @@ export default function CreateAccountModal(){
                         value={name}
                         placeholder="Your Name"
                         placeholderTextColor={"#807e7c"}
+                        autoCorrect={false}
                     />
                     <TextInput
                         style={styles.shortTextInput}
@@ -66,6 +68,7 @@ export default function CreateAccountModal(){
                         value={email}
                         placeholder="Your Email"
                         placeholderTextColor={"#807e7c"}
+                        autoCorrect={false}
                     />
                     <TextInput
                         style={styles.shortTextInput}
@@ -73,6 +76,8 @@ export default function CreateAccountModal(){
                         value={password}
                         placeholder="Password"
                         placeholderTextColor={"#807e7c"}
+                        secureTextEntry={true}
+                        autoCorrect={false}
                     />
                     <TextInput
                         style={styles.shortTextInput}
@@ -80,8 +85,10 @@ export default function CreateAccountModal(){
                         value={confirmPassword}
                         placeholder="Confirm Password"
                         placeholderTextColor={"#807e7c"}
+                        secureTextEntry={true}
+                        autoCorrect={false}
                     />
-                    <View style={{margin:'auto'}}>
+                    <View style={{margin:'auto', paddingTop: 5, paddingBottom: 5}}>
                         <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{dispatch(setLoginState({loggedin: true})); dispatch(setCreateAnAccount({createAnAccount: false}))}}/>
                         <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setCreateAnAccount({createAnAccount: false}))}}/>
                     </View>

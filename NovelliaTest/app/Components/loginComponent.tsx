@@ -18,7 +18,6 @@ export default function loginComponent(){
             <View style={styles.spacingPadding}>
                 <Text style={styles.titleText}>Login</Text>
                 <View style={styles.spacingPadding}>
-                    <AppButton style={styles.loginButton} text={"Login"} onPress={()=>{dispatch(setIsLoggingIn({loggedin: true}));}}/>
                     <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{dispatch(setCreateAnAccount({createAnAccount: true}))}}/>
                 </View>
             </View>

@@ -78,7 +78,7 @@ function deleteRecord(){
         elevation: 5,
       }}
     >
-      <View style={{height: 'auto', width: '70%', marginTop: 10, marginBottom: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
+      <View style={{height: 'auto', width: '100%', marginTop: 10, marginBottom: 10, padding: 20, backgroundColor:"#F5F0CD"}}>
       <Text style={styles.titleText}>{currentPet.name}'s {currentRecord.type} Record</Text>
       <AppButton style={styles.returnButton} text={"Edit Record"} onPress={()=>{dispatch(setIsAddRecordOpen({setIsAddRecordOpen: true}));}}/>
             {currentRecord.type === "Vaccine" ? <View style={{marginBottom: 25}}>

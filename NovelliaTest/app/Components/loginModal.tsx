@@ -36,6 +36,7 @@ export default function LoginModal(){
                     alignItems: 'center',
                     shadowColor: '#000',
                     width: '80%',
+                    height: '70%',
                     margin: 'auto',
                     shadowOffset: {
                     width: 0,
@@ -65,12 +66,12 @@ export default function LoginModal(){
                         placeholder="Password"
                         placeholderTextColor={"#807e7c"}
                     />
-                    <View style={{margin:'auto'}}>
+                    <View style={{margin:'auto', paddingTop: 5, paddingBottom: 5}}>
                         <AppButton style={styles.loginButton} text={"Login"} onPress={()=>{
-                        dispatch(setIsLoggingIn({isLoggingIn: false}));
-                        dispatch(setLoginState({loggedin:true}));
-                    }}/>
-                    <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsLoggingIn({isLoggingIn: false}))}}/>
+                            dispatch(setIsLoggingIn({isLoggingIn: false}));
+                            dispatch(setLoginState({loggedin:true}));
+                        }}/>
+                        <AppButton style={styles.loginButton} text={"Cancel"} onPress={()=>{dispatch(setIsLoggingIn({isLoggingIn: false}))}}/>
                     </View>
                 </View>
             </View>

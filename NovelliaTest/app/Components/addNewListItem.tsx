@@ -206,7 +206,7 @@ export default function AddNewListItem({itemType, onClose}: any){
         var yyyy = today.getFullYear();
         var date = mm + '/' + dd + '/' + yyyy;
 
-        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
+        if(currentRecordType === 'Vaccine' && vaccineName !== '' && vaccineDate !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
@@ -227,7 +227,7 @@ export default function AddNewListItem({itemType, onClose}: any){
             dispatch(setPetList({petList: newRecordList}));
             dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
-        else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
+        else if(currentRecordType === 'Allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id:number) => {
@@ -247,7 +247,7 @@ export default function AddNewListItem({itemType, onClose}: any){
             dispatch(setPetList({petList: newRecordList}));
             dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
-        else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
+        else if(currentRecordType === 'Lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any, id: number) => {
@@ -282,7 +282,7 @@ export default function AddNewListItem({itemType, onClose}: any){
         var yyyy = today.getFullYear();
         var date = mm + '/' + dd + '/' + yyyy;
 
-        if(currentRecordType.toLowerCase() === 'vaccine' && vaccineName !== '' && vaccineDate !==''){
+        if(currentRecordType === 'Vaccine' && vaccineName !== '' && vaccineDate !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
@@ -299,7 +299,7 @@ export default function AddNewListItem({itemType, onClose}: any){
             dispatch(setPetList({petList: newRecordList}));
             dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
-        else if(currentRecordType.toLowerCase() === 'allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
+        else if(currentRecordType === 'Allergy' && allergyName !=='' && allergyReaction !=='' && allergySeverity !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
@@ -315,7 +315,7 @@ export default function AddNewListItem({itemType, onClose}: any){
             dispatch(setPetList({petList: newRecordList}));
             dispatch(setIsAddRecordOpen({isAddRecordOpen: false}))
         }
-        else if(currentRecordType.toLowerCase() === 'lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
+        else if(currentRecordType === 'Lab' && labName !=='' && labDosage !=='' && labInstruction !==''){
             myPetList.forEach((element: PetInfo, index: number) => {
                 if(index === currentPetIndex){
                     myPetList[currentPetIndex].records.forEach((ele: any) => {
@@ -384,7 +384,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                             <View style={{margin: 'auto'}}>
                                 <AppButton text={DOB === '' ? "Select Birthday" : DOB} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
                             </View>
-                            {showCalendar && <DateTimePicker
+                            {showCalendar && <><DateTimePicker
                                 style={{width: '100%', margin:'auto', }}
                                 testID="dateTimePicker"
                                 value={date}
@@ -393,7 +393,14 @@ export default function AddNewListItem({itemType, onClose}: any){
                                 themeVariant={"light"}
                                 maximumDate={new Date()}
                                  display="inline"
-                            />}
+                            />
+                            <TextInput 
+                                style={styles.shortTextInput}
+                                onChangeText={setDOB}
+                                value={DOB}
+                                placeholder="Your Pet's Birthday"
+                                placeholderTextColor={"#807e7c"}/>
+                            </>}
                         </View>
                     </View>
                     {showError && <Text style={styles.errorText}>Information missing for adding your pet, please add all information.</Text>}
@@ -424,7 +431,7 @@ export default function AddNewListItem({itemType, onClose}: any){
                                 <View style={{margin: 'auto'}}>
                                     <AppButton text={vaccineDate === '' ? "Select Date" : vaccineDate} onPress={()=>{setShowCalendar(!showCalendar)}} style={styles.CalendarButton}/>
                                 </View>
-                                {showCalendar && <DateTimePicker
+                                {showCalendar && <><DateTimePicker
                                     style={{width: '100%', margin:'auto', }}
                                     testID="dateTimePicker"
                                     value={date}
@@ -433,7 +440,15 @@ export default function AddNewListItem({itemType, onClose}: any){
                                     themeVariant={"light"}
                                     maximumDate={new Date()}
                                     display="inline"
-                                />}
+                                />
+                                <TextInput 
+                                    style={styles.shortTextInput}
+                                    onChangeText={setVaccineDate}
+                                    value={vaccineDate}
+                                    placeholder="Administered Date"
+                                    placeholderTextColor={"#807e7c"}/>
+                                </>
+                                }
                                 </View>
                         </View>
                     </View> : null}
