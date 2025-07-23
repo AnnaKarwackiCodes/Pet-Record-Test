@@ -16,7 +16,7 @@ export default function loginComponent(){
                 style={{width: 100, height: 100, alignSelf: 'center'}}
             />
             <View style={styles.spacingPadding}>
-                <Text style={styles.titleText}>Novellia Pets</Text>
+                <Text style={styles.titleText}>My Pet Records</Text>
                 <Text style={styles.bodyText}>Better tracking for your pet's vet records</Text>
                 <View style={{margin:'auto', padding: 15}}>
                     <AppButton style={styles.loginButton} text={"Create an Account"} onPress={()=>{dispatch(setCreateAnAccount({createAnAccount: true}))}}/>
